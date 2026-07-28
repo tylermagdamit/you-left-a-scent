@@ -6,10 +6,10 @@ import sqlite3
 from pathlib import Path
 from typing import Iterable
 
-from .data import EMOTION_ALIASES, NOTE_SEEDS, category_for_tag
+from .data import NOTE_SEEDS, VIBE_ALIASES, category_for_tag
 
 
-SEED_VERSION = 5
+SEED_VERSION = 7
 
 
 def default_db_path() -> Path:
@@ -116,7 +116,7 @@ def seed_database(conn: sqlite3.Connection) -> None:
                 (note_id, tag_id, _weight_for_tag(tag)),
             )
 
-    seed_emotion_aliases(conn, tag_ids)
+    seed_vibe_aliases(conn, tag_ids)
     conn.execute(
         """
         INSERT INTO schema_metadata (key, value)
@@ -128,8 +128,8 @@ def seed_database(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
-def seed_emotion_aliases(conn: sqlite3.Connection, tag_ids: dict[str, int]) -> None:
-    for input_term, target_tags in EMOTION_ALIASES.items():
+def seed_vibe_aliases(conn: sqlite3.Connection, tag_ids: dict[str, int]) -> None:
+    for input_term, target_tags in VIBE_ALIASES.items():
         for target_tag in target_tags:
             tag_id = tag_ids.get(target_tag)
             if tag_id is None:
