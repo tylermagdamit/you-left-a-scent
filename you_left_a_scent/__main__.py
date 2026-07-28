@@ -1,5 +1,6 @@
-from you_left_a_scent.cli import main
+from .cli import main
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
