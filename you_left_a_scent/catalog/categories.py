@@ -62,6 +62,10 @@ TAG_CATEGORIES = OrderedDict(
         )),
         ("texture", _group("dusty", "bitter", "sharp", "messy", "damp", "powdery", "creamy", "dry")),
         ("luxury", _group("luxury", "amber", "labdanum", "benzoin", "saffron", "golden", "elegant", "smooth", "expensive")),
+        ("modern_materials", _group(
+            "ambroxan", "iso e super", "cashmeran", "hedione", "galaxolide", "calone",
+            "orris butter", "ambrette", "champagne accord",
+        )),
         ("clean", _group("spa", "white shirt", "minimal", "muted", "skin", "soft", "quiet", "polished")),
         ("citrus", _group("citrus", "bergamot", "grapefruit", "lemon", "neroli", "orange")),
         ("emotion", _group(

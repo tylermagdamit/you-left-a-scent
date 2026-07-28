@@ -4,8 +4,8 @@ from __future__ import annotations
 
 
 EVENT_ALIASES = {
-    "birthday": ["birthday cake", "cake", "candles", "confetti", "vanilla", "pink", "celebration"],
-    "birthday party": ["birthday cake", "confetti", "candles", "peony", "sparkling", "happy"],
+    "birthday": ["birthday cake", "cake", "vanilla", "pink", "celebration", "champagne accord", "party"],
+    "birthday party": ["birthday cake", "champagne accord", "peony", "sparkling", "happy", "party"],
     "wedding": ["white", "rose", "jasmine", "satin", "bouquet", "luminous", "romantic"],
     "anniversary": ["romantic", "rose", "amber", "jasmine", "sandalwood", "luxe"],
     "graduation": ["confident", "champagne accord", "clean", "polished", "bright", "hopeful"],
@@ -21,4 +21,3 @@ EVENT_ALIASES = {
     "picnic": ["spring", "green", "apple skin", "hay", "fresh", "bright"],
     "concert": ["neon", "smoke", "electric", "amber", "night out", "bold"],
 }
-
