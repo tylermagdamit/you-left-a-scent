@@ -7,7 +7,7 @@ import sqlite3
 from you_left_a_scent.catalog import NOTE_SEEDS, VIBE_ALIASES, category_for_tag
 
 
-SEED_VERSION = 8
+SEED_VERSION = 10
 
 
 def clear_seed_data(conn: sqlite3.Connection) -> None:
@@ -34,7 +34,7 @@ def seed_database(conn: sqlite3.Connection) -> None:
         )
         note_id = cur.lastrowid
 
-        for tag in note["tags"]:
+        for tag in [str(note["name"]).lower(), *note["tags"]]:
             tag_id = _ensure_tag(conn, tag_ids, tag)
             conn.execute(
                 "INSERT OR IGNORE INTO note_vibe_tags (note_id, tag_id, weight) VALUES (?, ?, ?)",
@@ -108,9 +108,17 @@ def _weight_for_tag(tag: str) -> int:
         "sensual",
         "dreamy",
         "mysterious",
+        "jealous",
+        "homesick",
+        "embarrassed",
+        "curious",
+        "focused",
+        "burned out",
+        "overwhelmed",
+        "in love",
+        "homesafe",
     }:
         return 3
     if lowered in {"clean", "fresh", "soft", "bright", "warm", "green", "luxury", "comforted", "vulnerable"}:
         return 2
     return 1
-

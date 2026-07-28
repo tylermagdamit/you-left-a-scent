@@ -1,42 +1,130 @@
 # You Left a Scent
 
-A local, SQLite-backed fragrance vibe generator.
+`You Left a Scent` is a small local fragrance-vibe generator. You give it a short phrase like `sad sunrise`, `job interview`, `desert`, or `liminal hallway`, and it returns 3 to 5 scent notes that fit the mood.
 
-## What it does
+It does not use AI. The whole personality of the app comes from a curated SQLite-backed catalog of notes, tags, and aliases.
 
-You type a short phrase like:
+## Try It
 
-- `robotic sunrise`
-- `romantic night out`
-- `quiet rainy commute`
-
-The app looks up vibe tags in a local SQLite database and returns 3 to 5 scent notes that match the mood.
-
-## How it is built
-
-- `you_left_a_scent/catalog/` holds notes, aliases, and tag categories.
-- `you_left_a_scent/db/` connects to SQLite, creates tables, and seeds data.
-- `you_left_a_scent/matching/` normalizes input, runs RapidFuzz, and scores notes.
-- `you_left_a_scent/cli.py` handles the terminal interface.
-
-## Run it
-
-Install dependencies first:
+Install the one external dependency:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-```bash
-python main.py "romantic night out"
-```
-
-Or:
+Run a prompt:
 
 ```bash
-python -m you_left_a_scent "robotic sunrise"
+python main.py "blue winter morning"
 ```
 
-The first run creates `you_left_a_scent.db` in the project root.
+Or run it as a package:
 
-Matching is still local and database-driven. RapidFuzz only helps compare user input against the local tags and aliases.
+```bash
+python -m you_left_a_scent "grunge summer"
+```
+
+If you run it with no phrase, it will ask you for one:
+
+```bash
+python main.py
+```
+
+The first run creates `you_left_a_scent.db` in the project root. That database is generated locally from the Python catalog files.
+
+## Example Prompts
+
+Try phrases like:
+
+- `sad sunrise`
+- `early classroom morning`
+- `job interview`
+- `desert`
+- `black velvet desert`
+- `blue winter morning`
+- `liminal hallway`
+- `dreamcore classroom`
+- `grunge summer`
+- `dark academia library`
+- `avant-garde gallery opening`
+
+## How Matching Works
+
+The app breaks your phrase into words and short phrases, then checks them against a local SQLite database.
+
+It looks for:
+
+- exact vibe tags, like `rain`, `rose`, `desert`, or `winter`
+- curated aliases, like `job interview -> clean, polished, confident`
+- fuzzy matches through RapidFuzz, like `sunrize ~= sunrise`
+
+RapidFuzz is not AI. It only compares strings against the local catalog so the app can tolerate typos and near matches.
+
+## Project Structure
+
+```text
+you_left_a_scent/
+  catalog/
+    aliases/
+      aesthetics.py
+      colors.py
+      emotions.py
+      places.py
+      scenarios.py
+      seasons.py
+    categories.py
+    notes.py
+  db/
+    connection.py
+    schema.py
+    seed.py
+  matching/
+    fuzzy.py
+    matcher.py
+    models.py
+    normalization.py
+    repository.py
+  cli.py
+```
+
+The older files `data.py`, `database.py`, and `matcher.py` are still there as thin compatibility wrappers. They keep old imports working while the real code lives in the organized subpackages.
+
+## Adding More Vibes
+
+Most creative expansion happens in two places.
+
+Add new scent materials in:
+
+```text
+you_left_a_scent/catalog/notes.py
+```
+
+Add new prompt language in:
+
+```text
+you_left_a_scent/catalog/aliases/
+```
+
+For example, aesthetics belong in:
+
+```text
+you_left_a_scent/catalog/aliases/aesthetics.py
+```
+
+If you add new tags and want them grouped cleanly, update:
+
+```text
+you_left_a_scent/catalog/categories.py
+```
+
+When the seed data changes, bump `SEED_VERSION` in:
+
+```text
+you_left_a_scent/db/seed.py
+```
+
+That tells the app to refresh the generated SQLite database the next time it runs.
+
+## Why This Design
+
+The project is meant to stay lightweight and personal. SQLite gives it a real local database without needing a server. RapidFuzz gives it a little flexibility without turning it into an AI app. The catalog files keep the taste and logic visible, editable, and yours.
