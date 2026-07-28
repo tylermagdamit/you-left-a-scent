@@ -40,6 +40,11 @@ TAG_CATEGORIES = OrderedDict(
             "purple", "violet", "black", "white", "silver", "grey", "gray", "brown",
             "cream", "clear", "neon", "pastel",
         )),
+        ("food_drink", _group(
+            "mojito", "margarita", "espresso martini", "champagne", "wine", "whiskey", "rum", "tea", "coffee",
+            "dessert", "picnic", "brunch", "coffee shop", "bakery", "street food", "lunch", "dinner",
+            "late night snack",
+        )),
         ("aesthetic", _group(
             "grunge", "dreamcore", "weirdcore", "avant-garde", "liminal", "cottagecore",
             "dark academia", "light academia", "goth", "cyberpunk", "vaporwave", "fairycore",
