@@ -14,6 +14,8 @@ EMOTION_ALIASES = {
     "hopeful": ["hopeful", "sunrise", "neroli", "bergamot", "green", "clean"],
     "happy": ["happy", "joyful", "bright", "sparkling", "citrus", "fresh"],
     "joyful": ["joyful", "bright", "sparkling", "orange blossom", "peony", "fresh"],
+    "serene": ["serene", "calm", "white tea", "musk", "airy", "quiet"],
+    "wistful": ["wistful", "nostalgic", "paper", "violet", "rain", "soft"],
     "euphoric": ["euphoric", "sparkling", "pink pepper", "grapefruit", "luminous"],
     "peaceful": ["peaceful", "calm", "lavender", "tea", "clean", "soft"],
     "calm": ["calm", "green tea", "lavender", "quiet", "spa", "clean"],
@@ -36,4 +38,3 @@ EMOTION_ALIASES = {
     "in love": ["romantic", "rose", "jasmine", "vanilla", "amber", "skin"],
     "homesafe": ["comforted", "vanilla", "rice steam", "milk accord", "soft", "warm"],
 }
-

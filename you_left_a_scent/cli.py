@@ -16,7 +16,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Turn a short vibe sentence into 3 to 5 scent notes using a local SQLite database.",
     )
     parser.add_argument("vibe", nargs="*", help='A short phrase like "robotic sunrise" or "romantic night out".')
-    parser.add_argument("-n", "--count", type=int, default=4, help="How many notes to return, between 3 and 5.")
+    parser.add_argument("-n", "--count", type=int, default=5, help="How many notes to return, between 3 and 5.")
     parser.add_argument("--db", type=Path, default=default_db_path(), help="Path to the SQLite database file.")
     return parser
 

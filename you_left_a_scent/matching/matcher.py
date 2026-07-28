@@ -12,7 +12,7 @@ from .normalization import normalize_terms
 from .repository import load_fallback_notes, load_match_choices
 
 
-def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple[list[ScentRecommendation], list[str]]:
+def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple[list[ScentRecommendation], list[str]]:
     limit = max(3, min(5, int(limit)))
     terms = normalize_terms(vibe_text)
     if not terms:

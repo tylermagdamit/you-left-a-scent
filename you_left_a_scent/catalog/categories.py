@@ -55,6 +55,10 @@ TAG_CATEGORIES = OrderedDict(
             "dark academia", "light academia", "goth", "cyberpunk", "vaporwave", "fairycore",
             "coquette", "clean girl", "old money", "brutalist", "maximalist", "minimalist",
             "bohemian", "noir", "ethereal", "editorial", "abstract", "surreal", "empty",
+            "soft girl", "dark feminine", "old hollywood", "coastal grandmother", "office siren",
+            "techwear", "indie sleaze", "goblincore", "regencycore", "y2k", "fairygrunge",
+            "monochrome", "dopamine dressing", "art hoe", "glassmorphism", "new romantic",
+            "quiet luxury", "surrealist", "brutalist minimal", "neon noir",
         )),
         ("expression", _group(
             "love", "i love you", "adore", "miss you", "miss", "crave", "want", "need",
