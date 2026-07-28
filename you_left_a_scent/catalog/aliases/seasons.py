@@ -37,4 +37,11 @@ SEASON_ALIASES = {
     "dry season": ["dry season", "dry", "sunbaked", "cedar", "vetiver", "desert"],
     "heatwave": ["dry heat", "sunbaked", "citrus", "ginger", "amber", "restless"],
     "monsoon": ["rain", "humid", "jasmine", "petrichor", "green", "ozone"],
+    "early autumn": ["amber", "cedar", "cocoa", "dry", "golden", "spicy", "soft"],
+    "mid winter": ["snow", "cold", "pine", "quiet", "vanilla", "smoke", "frost"],
+    "spring bloom": ["peony", "cherry blossom", "green", "floral", "fresh", "soft", "pollen"],
+    "autumn leaves": ["dry", "golden", "cedar", "smoke", "crisp", "earthy", "amber"],
+    "summer dusk": ["coconut", "jasmine", "amber", "warm", "night air", "soft", "marine"],
+    "winter night": ["snow", "cold", "quiet", "musk", "starlight", "dark", "pine"],
+    "spring drizzle": ["rain", "green", "fresh", "petrichor", "soft", "floral", "clean"],
 }

@@ -10,6 +10,7 @@ except ImportError:  # pragma: no cover - depends on the local environment.
 
 
 FUZZY_SCORE_CUTOFF = 78
+MIN_TERM_LENGTH = 4
 
 
 def fuzzy_matches(
@@ -25,6 +26,9 @@ def fuzzy_matches(
     for term in terms:
         if term in excluded_terms:
             continue
+        # Skip very short terms to avoid false positives (e.g. "man" → "mandarin")
+        if len(term) < MIN_TERM_LENGTH:
+            continue
         term_word_count = len(term.split())
         for choice, score, _ in process.extract(
             term,
@@ -37,6 +41,10 @@ def fuzzy_matches(
                 continue
             if len(choice.split()) != term_word_count:
                 continue
+            # Apply substring penalty: if term is a substring of choice, raise the bar
+            if term in choice and len(term) < len(choice):
+                if score < 92:
+                    continue
             matches.append((choice, int(score), term))
     return matches
 
