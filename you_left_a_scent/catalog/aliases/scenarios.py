@@ -15,9 +15,13 @@ SCENARIO_ALIASES = {
     "breakup": ["heartbroken", "rose", "rain", "smoke", "iris", "musk"],
     "final exam": ["anxious", "paper", "mint", "cedar", "clean", "focused"],
     "prom night": ["romantic", "sparkling", "rose", "vanilla", "pink", "night out"],
-    "road trip": ["night drive", "ozone", "cedar", "citrus", "gasoline", "restless"],
+    "road trip": ["night drive", "ozone", "cedar", "citrus", "amber", "restless"],
     "sleepover": ["comforted", "vanilla", "milk accord", "pastel", "musk", "happy"],
     "gallery opening": ["avant-garde", "iris", "champagne accord", "polished", "metallic", "black"],
     "after party": ["smoke", "skin", "amber", "night", "champagne accord", "messy"],
+    "wedding guest": ["rose", "satin", "champagne accord", "peony", "polished", "romantic"],
+    "museum date": ["iris", "paper", "quiet", "polished", "black tea", "abstract"],
+    "late train": ["ozone", "concrete", "rain", "metallic", "night", "quiet"],
+    "new apartment": ["clean", "white tea", "cedarwood", "linen", "soft", "minimal"],
+    "summer festival": ["neon", "citrus", "smoke", "champagne accord", "night out", "bright"],
 }
-
