@@ -69,9 +69,11 @@ you_left_a_scent/
       aesthetics.py
       colors.py
       emotions.py
+      food_and_drinks.py
       places.py
       scenarios.py
       seasons.py
+    syntax.py
     categories.py
     notes.py
   db/
@@ -89,6 +91,8 @@ you_left_a_scent/
 
 The older files `data.py`, `database.py`, and `matcher.py` are still there as thin compatibility wrappers. They keep old imports working while the real code lives in the organized subpackages.
 
+The `catalog/syntax.py` file is the little language layer that strips out filler words like `the`, `by`, and `and` so the matcher can focus on the real content of a sentence.
+
 ## Adding More Vibes
 
 Most creative expansion happens in two places.
@@ -104,6 +108,8 @@ Add new prompt language in:
 ```text
 you_left_a_scent/catalog/aliases/
 ```
+
+Use `you_left_a_scent/catalog/aliases/food_and_drinks.py` for general meal, drink, and snack language.
 
 For example, aesthetics belong in:
 
