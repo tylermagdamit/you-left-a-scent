@@ -51,6 +51,10 @@ TAG_CATEGORIES = OrderedDict(
             "coquette", "clean girl", "old money", "brutalist", "maximalist", "minimalist",
             "bohemian", "noir", "ethereal", "editorial", "abstract", "surreal", "empty",
         )),
+        ("expression", _group(
+            "love", "i love you", "adore", "miss you", "miss", "crave", "want", "need",
+            "yearn", "cherish", "obsessed", "hate", "dream", "remember", "forget",
+        )),
         ("texture", _group("dusty", "bitter", "sharp", "messy", "damp", "powdery", "creamy", "dry")),
         ("luxury", _group("luxury", "amber", "labdanum", "benzoin", "saffron", "golden", "elegant", "smooth", "expensive")),
         ("clean", _group("spa", "white shirt", "minimal", "muted", "skin", "soft", "quiet", "polished")),
