@@ -60,6 +60,8 @@ It looks for:
 
 RapidFuzz is not AI. It only compares strings against the local catalog so the app can tolerate typos and near matches.
 
+The app also keeps a tiny local recommendation history. If you run the same vibe again, it will try to move toward different notes instead of giving you the exact same blend every time.
+
 ## Project Structure
 
 ```text

@@ -45,6 +45,11 @@ TAG_CATEGORIES = OrderedDict(
             "dessert", "picnic", "brunch", "coffee shop", "bakery", "street food", "lunch", "dinner",
             "late night snack",
         )),
+        ("event", _group(
+            "birthday", "birthday party", "wedding", "anniversary", "graduation", "baby shower",
+            "holiday party", "new year", "party", "celebration", "funeral", "reunion", "farewell",
+            "date night", "concert",
+        )),
         ("aesthetic", _group(
             "grunge", "dreamcore", "weirdcore", "avant-garde", "liminal", "cottagecore",
             "dark academia", "light academia", "goth", "cyberpunk", "vaporwave", "fairycore",

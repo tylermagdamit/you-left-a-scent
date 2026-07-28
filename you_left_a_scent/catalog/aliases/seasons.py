@@ -10,6 +10,7 @@ SEASON_ALIASES = {
     "fall": ["fall", "autumn", "cedar", "amber", "cocoa", "dry", "spicy"],
     "winter": ["winter", "snow", "frost", "cold", "pine", "vanilla", "musk"],
     "snow": ["snow", "frost", "cold", "clean", "musk", "pine"],
+    "sunrise": ["sunrise", "bergamot", "yuzu", "mandarin", "honey", "neroli", "peony", "coconut", "white amber", "gold"],
     "rainy": ["rain", "petrichor", "fresh air", "melancholy", "green"],
     "stormy": ["ozone", "rain", "smoke", "dark", "electric", "restless"],
     "foggy": ["musk", "gray", "rain", "quiet", "liminal", "soft"],
@@ -18,4 +19,3 @@ SEASON_ALIASES = {
     "heatwave": ["dry heat", "sunbaked", "citrus", "ginger", "amber", "restless"],
     "monsoon": ["rain", "humid", "jasmine", "petrichor", "green", "ozone"],
 }
-

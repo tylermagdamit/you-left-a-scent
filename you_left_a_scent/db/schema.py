@@ -46,6 +46,13 @@ def initialize(conn: sqlite3.Connection) -> None:
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL
         );
+
+        CREATE TABLE IF NOT EXISTS recommendation_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            input_key TEXT NOT NULL,
+            note_name TEXT NOT NULL,
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
         """
     )
 
@@ -57,4 +64,3 @@ def initialize(conn: sqlite3.Connection) -> None:
     if count == 0 or seed_version is None or int(seed_version["value"]) < SEED_VERSION:
         clear_seed_data(conn)
         seed_database(conn)
-
