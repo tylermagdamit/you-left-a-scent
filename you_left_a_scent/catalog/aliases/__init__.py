@@ -1,0 +1,23 @@
+"""Combined alias catalog for abstract vibe matching."""
+
+from __future__ import annotations
+
+from .aesthetics import AESTHETIC_ALIASES
+from .colors import COLOR_ALIASES
+from .emotions import EMOTION_ALIASES
+from .places import PLACE_ALIASES
+from .scenarios import SCENARIO_ALIASES
+from .seasons import SEASON_ALIASES
+
+
+VIBE_ALIASES = {
+    **PLACE_ALIASES,
+    **SCENARIO_ALIASES,
+    **SEASON_ALIASES,
+    **COLOR_ALIASES,
+    **EMOTION_ALIASES,
+    **AESTHETIC_ALIASES,
+}
+
+__all__ = ["VIBE_ALIASES"]
+
