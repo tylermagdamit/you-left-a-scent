@@ -9,7 +9,7 @@ from typing import Iterable
 from .data import EMOTION_ALIASES, NOTE_SEEDS, category_for_tag
 
 
-SEED_VERSION = 2
+SEED_VERSION = 5
 
 
 def default_db_path() -> Path:
@@ -151,6 +151,8 @@ def seed_emotion_aliases(conn: sqlite3.Connection, tag_ids: dict[str, int]) -> N
 
 
 def _boost_for_alias(input_term: str, target_tag: str) -> int:
+    if " " in input_term:
+        return 3
     return 4 if input_term == target_tag else 2
 
 

@@ -31,7 +31,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     with connect(args.db) as conn:
         initialize(conn)
-        notes, matched_tags = recommend(conn, vibe_text, limit=args.count)
+        try:
+            notes, matched_tags = recommend(conn, vibe_text, limit=args.count)
+        except RuntimeError as error:
+            parser.exit(1, f"{error}\n")
 
     print("\nYou Left a Scent")
     print("=" * 16)
@@ -50,4 +53,3 @@ def main(argv: Sequence[str] | None = None) -> int:
         print()
 
     return 0
-

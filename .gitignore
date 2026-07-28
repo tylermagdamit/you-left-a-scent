@@ -1,0 +1,28 @@
+# Python bytecode/cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build/package outputs
+build/
+dist/
+*.egg-info/
+
+# Local SQLite database generated on first run
+*.db
+*.db-shm
+*.db-wal
+
+# Tooling/editor noise
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.idea/
+.vscode/
+
