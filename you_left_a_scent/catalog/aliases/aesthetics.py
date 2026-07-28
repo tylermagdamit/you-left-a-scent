@@ -14,7 +14,7 @@ AESTHETIC_ALIASES = {
     "light academia": ["paper", "white tea", "neroli", "clean", "sunlit", "iris", "library"],
     "goth": ["black", "incense", "rose", "patchouli", "smoke", "myrrh", "velvet"],
     "cyberpunk": ["neon", "metallic", "ozone", "electric", "smoke", "city lights", "synthetic"],
-    "vaporwave": ["neon", "pastel", "coconut water", "ozone", "synthetic", "pink", "blue"],
+    "vaporwave": ["neon", "pastel", "coconut", "ozone", "synthetic", "pink", "blue"],
     "fairycore": ["mossy", "violet", "green", "rain", "wildflower", "dreamy", "forest"],
     "coquette": ["pink", "rose", "powdery", "vanilla", "peony", "soft", "flirty"],
     "clean girl": ["clean", "white shirt", "musk", "neroli", "minimal", "skin", "polished"],
@@ -29,4 +29,3 @@ AESTHETIC_ALIASES = {
     "romcom": ["romantic", "happy", "pink", "peony", "sparkling", "vanilla", "date night"],
     "editorial": ["avant-garde", "iris", "metallic", "saffron", "black", "abstract", "polished"],
 }
-

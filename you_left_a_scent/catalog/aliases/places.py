@@ -12,7 +12,7 @@ PLACE_ALIASES = {
     "mountain": ["pine", "cedar", "fresh air", "cold", "forest", "mineral"],
     "forest": ["forest", "pine", "oakmoss", "mossy", "earthy", "green", "cedar"],
     "library": ["paper", "cedar", "quiet", "powdery", "nostalgic", "dry"],
-    "beach": ["beach", "sea salt", "coconut water", "marine", "sunlit", "clean"],
+    "beach": ["beach", "sea salt", "coconut", "marine", "sunlit", "clean"],
     "church": ["incense", "myrrh", "quiet", "ritual", "mysterious", "wood"],
     "hospital": ["clean", "aldehydes", "white", "metallic", "quiet", "anxious"],
     "laundromat": ["clean", "musk", "aldehydes", "white", "warm", "comforted"],
@@ -27,4 +27,3 @@ PLACE_ALIASES = {
     "basement": ["concrete", "mossy", "damp", "gray", "earthy", "mysterious"],
     "hallway": ["liminal", "fluorescent", "clean", "ozone", "concrete", "quiet"],
 }
-

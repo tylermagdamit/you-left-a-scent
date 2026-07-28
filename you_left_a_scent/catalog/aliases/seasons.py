@@ -5,7 +5,7 @@ from __future__ import annotations
 
 SEASON_ALIASES = {
     "spring": ["spring", "green", "peony", "cherry blossom", "fresh", "rain"],
-    "summer": ["summer", "coconut water", "sea salt", "citrus", "bright", "beach"],
+    "summer": ["summer", "coconut", "sea salt", "citrus", "bright", "beach"],
     "autumn": ["autumn", "fall", "cedar", "amber", "cocoa", "dry", "spicy"],
     "fall": ["fall", "autumn", "cedar", "amber", "cocoa", "dry", "spicy"],
     "winter": ["winter", "snow", "frost", "cold", "pine", "vanilla", "musk"],
@@ -14,7 +14,7 @@ SEASON_ALIASES = {
     "rainy": ["rain", "petrichor", "fresh air", "melancholy", "green"],
     "stormy": ["ozone", "rain", "smoke", "dark", "electric", "restless"],
     "foggy": ["musk", "gray", "rain", "quiet", "liminal", "soft"],
-    "humid": ["humid", "tropical", "jasmine", "green", "coconut water", "marine"],
+    "humid": ["humid", "tropical", "jasmine", "green", "coconut", "marine"],
     "dry season": ["dry season", "dry", "sunbaked", "cedar", "vetiver", "desert"],
     "heatwave": ["dry heat", "sunbaked", "citrus", "ginger", "amber", "restless"],
     "monsoon": ["rain", "humid", "jasmine", "petrichor", "green", "ozone"],

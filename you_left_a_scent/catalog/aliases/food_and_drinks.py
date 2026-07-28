@@ -10,7 +10,7 @@ FOOD_AND_DRINK_ALIASES = {
     "champagne": ["champagne accord", "sparkling", "luxury", "bright", "night out", "happy"],
     "wine": ["plum", "red", "velvet", "dark fruit", "romantic", "evening"],
     "whiskey": ["smoke", "oakmoss", "amber", "leather", "dark", "warm"],
-    "rum": ["coconut water", "vanilla", "beach", "warm", "sweet", "summer"],
+    "rum": ["coconut", "vanilla", "beach", "warm", "sweet", "summer"],
     "tea": ["green tea", "black tea", "calm", "quiet", "clean", "soft"],
     "coffee": ["black coffee", "bitter", "focused", "warm", "dark", "morning"],
     "dessert": ["vanilla", "tonka bean", "cocoa", "sweet", "comforted", "gourmand"],
@@ -23,4 +23,3 @@ FOOD_AND_DRINK_ALIASES = {
     "dinner": ["amber", "jasmine", "sandalwood", "romantic", "warm", "polished"],
     "late night snack": ["cocoa", "vanilla", "comforted", "soft", "sweet", "quiet"],
 }
-
