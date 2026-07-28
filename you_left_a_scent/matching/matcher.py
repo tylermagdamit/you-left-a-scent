@@ -133,6 +133,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
 
     _represent_concrete_tags(unique, ranked, concrete_tag_names, limit)
     _fill_short_result(conn, unique, seen, limit)
+    _balance_roles(unique, ranked, seen, limit)
     record_recommendations(conn, input_key, [note.name for note in unique[:limit]])
     conn.commit()
     return unique[:limit], matched_tags
@@ -258,4 +259,64 @@ def _fill_short_result(
                 score=0,
                 matched_tags=(),
             )
+        )
+
+
+def _balance_roles(
+    recommendations: list[ScentRecommendation],
+    ranked: list[tuple[int, str, str, str, tuple[str, ...]]],
+    seen: set[str],
+    limit: int,
+) -> None:
+    """Ensure at least one top, heart, and base note in the final selection."""
+    if len(recommendations) < 3:
+        return
+
+    roles_present = {note.role for note in recommendations}
+    missing_roles = {"top", "heart", "base"} - roles_present
+    if not missing_roles:
+        return
+
+    # Build a map of role -> best candidates from ranked that aren't already selected
+    role_candidates: dict[str, list[tuple[int, str, str, str, tuple[str, ...]]]] = defaultdict(list)
+    for item in ranked:
+        _, name, role, _, _ = item
+        if name in seen:
+            continue
+        if role in missing_roles:
+            role_candidates[role].append(item)
+
+    # For each missing role, find the best candidate and swap it in
+    for missing_role in missing_roles:
+        candidates = role_candidates.get(missing_role, [])
+        if not candidates:
+            continue
+
+        # Find the worst note in recommendations that has a role we have duplicates of
+        role_counts: dict[str, int] = defaultdict(int)
+        for note in recommendations:
+            role_counts[note.role] += 1
+
+        # Find a note to replace: one whose role appears more than once
+        replace_idx = -1
+        for i, note in enumerate(recommendations):
+            if role_counts[note.role] > 1:
+                replace_idx = i
+                role_counts[note.role] -= 1
+                break
+
+        if replace_idx == -1:
+            continue
+
+        # Take the best candidate for the missing role
+        best_candidate = candidates[0]
+        _, name, role, description, tags = best_candidate
+        seen.discard(recommendations[replace_idx].name)
+        seen.add(name)
+        recommendations[replace_idx] = ScentRecommendation(
+            name=name,
+            role=role,
+            description=description,
+            score=best_candidate[0],
+            matched_tags=tags,
         )
