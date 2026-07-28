@@ -14,9 +14,9 @@ The app looks up vibe tags in a local SQLite database and returns 3 to 5 scent n
 
 ## How it is built
 
-- `you_left_a_scent/data.py` holds the seed library for notes and vibe tags.
-- `you_left_a_scent/database.py` creates and seeds the SQLite database.
-- `you_left_a_scent/matcher.py` scores the vibe locally with deterministic keyword matching.
+- `you_left_a_scent/catalog/` holds notes, aliases, and tag categories.
+- `you_left_a_scent/db/` connects to SQLite, creates tables, and seeds data.
+- `you_left_a_scent/matching/` normalizes input, runs RapidFuzz, and scores notes.
 - `you_left_a_scent/cli.py` handles the terminal interface.
 
 ## Run it

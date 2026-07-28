@@ -6,8 +6,8 @@ import argparse
 from pathlib import Path
 from typing import Sequence
 
-from .database import connect, default_db_path, initialize
-from .matcher import recommend
+from .db import connect, default_db_path, initialize
+from .matching import recommend
 
 
 def build_parser() -> argparse.ArgumentParser:
