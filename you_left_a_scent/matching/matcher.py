@@ -6,6 +6,7 @@ from collections import defaultdict
 import sqlite3
 
 from .fuzzy import fuzzy_matches, weight_from_fuzzy_score
+from .history import build_input_key, load_recent_note_names, load_repeat_penalties, record_recommendations
 from .models import ScentRecommendation
 from .normalization import normalize_terms
 from .repository import load_fallback_notes, load_match_choices
@@ -16,6 +17,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
     terms = normalize_terms(vibe_text)
     if not terms:
         return [], []
+    input_key = build_input_key(vibe_text)
 
     term_weights = {term: (4 if " " in term else 3) for term in terms}
     direct_choices, alias_choices = load_match_choices(conn)
@@ -92,13 +94,28 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
         for tag_id, weight in matched_tag_weights.items()
     }
     if not matched_tag_weights:
-        return _fallback_recommendations(conn, limit), matched_tags
+        notes = _fallback_recommendations(conn, limit)
+        record_recommendations(conn, input_key, [note.name for note in notes])
+        conn.commit()
+        return notes, matched_tags
 
-    ranked = _rank_notes(conn, matched_tag_weights, matched_weights_by_name, fuzzy_source_terms)
+    repeat_penalties = load_repeat_penalties(conn, input_key)
+    ranked = _rank_notes(
+        conn,
+        matched_tag_weights,
+        matched_weights_by_name,
+        fuzzy_source_terms,
+        repeat_penalties,
+    )
 
+    recent_note_names = load_recent_note_names(conn, input_key, limit=limit)
     unique: list[ScentRecommendation] = []
     seen: set[str] = set()
-    for score, name, role, description, tags in ranked:
+    selection_pool = [item for item in ranked if item[1] not in recent_note_names]
+    if len(selection_pool) < limit:
+        selection_pool.extend(item for item in ranked if item[1] in recent_note_names)
+
+    for score, name, role, description, tags in selection_pool:
         if name in seen:
             continue
         seen.add(name)
@@ -116,6 +133,8 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
 
     _represent_concrete_tags(unique, ranked, concrete_tag_names, limit)
     _fill_short_result(conn, unique, seen, limit)
+    record_recommendations(conn, input_key, [note.name for note in unique[:limit]])
+    conn.commit()
     return unique[:limit], matched_tags
 
 
@@ -137,6 +156,7 @@ def _rank_notes(
     matched_tag_weights: dict[int, int],
     matched_weights_by_name: dict[str, int],
     fuzzy_source_terms: dict[str, set[str]],
+    repeat_penalties: dict[str, int],
 ) -> list[tuple[int, str, str, str, tuple[str, ...]]]:
     scores: dict[int, int] = defaultdict(int)
     evidence: dict[int, set[str]] = defaultdict(set)
@@ -166,7 +186,7 @@ def _rank_notes(
     return sorted(
         (
             (
-                score,
+                score - repeat_penalties.get(note_meta[note_id][0], 0),
                 note_meta[note_id][0],
                 note_meta[note_id][1],
                 note_meta[note_id][2],
@@ -239,4 +259,3 @@ def _fill_short_result(
                 matched_tags=(),
             )
         )
-
