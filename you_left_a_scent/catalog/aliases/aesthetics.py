@@ -48,4 +48,12 @@ AESTHETIC_ALIASES = {
     "surrealist": ["absinthe", "ozone", "metallic", "dreamy", "weird", "mysterious", "electric"],
     "brutalist minimal": ["concrete", "gray", "mineral", "dry", "minimal", "cold", "architecture"],
     "neon noir": ["neon", "smoke", "black", "electric", "city lights", "night", "bold"],
+    "slow living": ["linen", "white tea", "clean", "sunlit", "musk", "quiet", "soft"],
+    "romantic goth": ["rose", "smoke", "black", "velvet", "incense", "luxe", "dark"],
+    "sunbleached": ["linen", "coconut", "sea salt", "white tea", "bright", "airy", "sand"],
+    "soft brutalism": ["concrete", "linen", "gray", "musk", "minimal", "polished", "cold"],
+    "motelcore": ["ozone", "concrete", "smoke", "neon", "night drive", "liminal", "restless"],
+    "apartmentcore": ["linen", "musk", "paper", "clean", "quiet", "minimal", "white shirt"],
+    "desert modern": ["sand", "mineral", "cedar", "amber", "dry heat", "minimal", "sunbaked"],
+    "romantic realism": ["rose", "iris", "white tea", "paper", "soft", "polished", "quiet"],
 }
