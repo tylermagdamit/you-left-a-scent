@@ -7,7 +7,7 @@ import sqlite3
 from you_left_a_scent.catalog import NOTE_SEEDS, VIBE_ALIASES, category_for_tag
 
 
-SEED_VERSION = 22
+SEED_VERSION = 23
 
 
 def clear_seed_data(conn: sqlite3.Connection) -> None:
@@ -125,8 +125,31 @@ def _weight_for_tag(tag: str) -> int:
         "melancholic",
         "energetic",
         "meditative",
+        "nostalgic",
+        "bittersweet",
+        "tension",
+        "hopeless",
+        "desperate",
+        "ashamed",
+        "grateful",
+        "tender",
+        "playful",
+        "content",
+        "serene",
+        "wistful",
+        "peaceful",
+        "confident",
+        "restless",
+        "vulnerable",
+        "comforted",
     }:
         return 3
-    if lowered in {"clean", "fresh", "soft", "bright", "warm", "green", "luxury", "comforted", "vulnerable"}:
+    if lowered in {
+        "clean", "fresh", "soft", "bright", "warm", "green", "luxury",
+        "dry", "sweet", "spicy", "smoky", "earthy", "woody", "floral",
+        "powdery", "creamy", "smooth", "golden", "silver", "dark",
+        "cool", "cold", "airy", "light", "rich", "bold", "muted",
+        "quiet", "calm", "minimal", "polished", "sunlit", "fresh air",
+    }:
         return 2
     return 1

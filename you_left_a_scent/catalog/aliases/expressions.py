@@ -71,6 +71,8 @@ EXPRESSION_ALIASES = {
     "drive": ["ozone", "night drive", "citrus", "restless", "fresh air", "cedar", "city lights"],
     "driving": ["ozone", "night drive", "citrus", "restless", "fresh air", "cedar", "city lights"],
     "fly": ["ozone", "airy", "bright", "fresh air", "clean", "sparkling", "citrus"],
+    "floating": ["ozone", "airy", "bright", "fresh air", "clean", "sparkling", "citrus"],
+    "float": ["ozone", "airy", "bright", "fresh air", "clean", "sparkling", "citrus"],
     "swim": ["marine", "ozone", "fresh", "water", "clean", "chlorine", "bright"],
     "swimming": ["marine", "ozone", "fresh", "water", "clean", "chlorine", "bright"],
     "rain": ["rain", "petrichor", "fresh air", "ozone", "melancholy", "clean", "quiet"],
