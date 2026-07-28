@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .aesthetics import AESTHETIC_ALIASES
+from .adjectives import ADJECTIVE_ALIASES
 from .colors import COLOR_ALIASES
 from .events import EVENT_ALIASES
 from .emotions import EMOTION_ALIASES
@@ -21,6 +22,7 @@ VIBE_ALIASES = {
     **EVENT_ALIASES,
     **EMOTION_ALIASES,
     **EXPRESSION_ALIASES,
+    **ADJECTIVE_ALIASES,
     **AESTHETIC_ALIASES,
     **FOOD_AND_DRINK_ALIASES,
 }

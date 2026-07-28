@@ -20,7 +20,7 @@ TAG_CATEGORIES = OrderedDict(
         ("spicy", _group("spicy", "warm spice", "peppery", "cardamom", "ginger", "saffron", "bold", "smoldering")),
         ("green", _group("green", "herbal", "botanical", "tea", "tea leaf", "matcha", "basil", "sage", "mint")),
         ("floral", _group("floral", "rose", "jasmine", "orange blossom", "peony", "lavender", "neroli", "cherry blossom", "iris", "violet")),
-        ("woody", _group("woody", "cedar", "cedarwood", "sandalwood", "cashmere wood", "architectural", "dry wood")),
+        ("woody", _group("woody", "cedar", "cedarwood", "sandalwood", "cashmere wood", "architectural", "dry wood", "wood")),
         ("smoky", _group("smoky", "smoke", "incense", "leather", "patchouli", "dark", "night", "ritual")),
         ("gourmand", _group("sweet", "vanilla", "tonka bean", "cocoa", "comforting", "cozy", "dessert", "soft sweet")),
         ("marine", _group("marine", "sea salt", "ocean", "beach", "open air", "water", "ozone")),
@@ -38,7 +38,8 @@ TAG_CATEGORIES = OrderedDict(
         ("color", _group(
             "red", "pink", "orange", "yellow", "gold", "golden", "green", "blue", "navy",
             "purple", "violet", "black", "white", "silver", "grey", "gray", "brown",
-            "cream", "clear", "neon", "pastel",
+            "cream", "clear", "neon", "pastel", "peach", "coral", "mint", "olive", "charcoal",
+            "beige", "teal", "burgundy", "ivory", "blush", "tan", "sky blue", "cobalt",
         )),
         ("food_drink", _group(
             "mojito", "margarita", "espresso martini", "champagne", "wine", "whiskey", "rum", "tea", "coffee",
@@ -64,21 +65,22 @@ TAG_CATEGORIES = OrderedDict(
             "love", "i love you", "adore", "miss you", "miss", "crave", "want", "need",
             "yearn", "cherish", "obsessed", "hate", "dream", "remember", "forget",
         )),
-        ("texture", _group("dusty", "bitter", "sharp", "messy", "damp", "powdery", "creamy", "dry")),
-        ("luxury", _group("luxury", "amber", "labdanum", "benzoin", "saffron", "golden", "elegant", "smooth", "expensive")),
+        ("texture", _group("dusty", "bitter", "sharp", "messy", "damp", "powdery", "creamy", "dry", "dirty", "grimy", "wet", "sticky", "fuzzy", "smooth", "salty", "sweet", "cold", "warm", "clean")),
         ("modern_materials", _group(
             "ambroxan", "iso e super", "cashmeran", "hedione", "galaxolide", "calone",
             "orris butter", "ambrette", "champagne accord",
         )),
-        ("clean", _group("spa", "white shirt", "minimal", "muted", "skin", "soft", "quiet", "polished")),
+        ("clean", _group("spa", "white shirt", "minimal", "muted", "skin", "soft", "quiet", "polished", "linen", "eucalyptus")),
         ("citrus", _group("citrus", "bergamot", "grapefruit", "lemon", "neroli", "orange")),
         ("emotion", _group(
             "sad", "melancholy", "lonely", "grief", "heartbroken", "nostalgic", "bittersweet",
             "hopeful", "joyful", "happy", "euphoric", "peaceful", "calm", "anxious", "restless",
             "angry", "confident", "sensual", "dreamy", "mysterious", "comforted", "vulnerable",
             "jealous", "homesick", "embarrassed", "curious", "focused", "burned out",
-            "overwhelmed", "in love", "homesafe",
+            "overwhelmed", "in love", "homesafe", "serene", "wistful", "longing", "content",
+            "tender", "playful", "detached", "safe", "ashamed", "desperate", "grateful", "intense",
         )),
+        ("luxury", _group("luxury", "amber", "labdanum", "benzoin", "saffron", "golden", "elegant", "smooth", "expensive", "white amber")),
     ]
 )
 

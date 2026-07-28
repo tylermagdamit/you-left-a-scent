@@ -1,76 +1,85 @@
 # You Left a Scent
 
-`You Left a Scent` is a small local fragrance-vibe generator. You give it a short phrase like `sad sunrise`, `job interview`, `desert`, or `liminal hallway`, and it returns 3 to 5 scent notes that fit the mood.
+`You Left a Scent` is a small local fragrance-vibe generator.
+You type in a short sentence like `kiss`, `moonlight`, `brutalist concrete`, or `job interview`, and it returns scent notes that fit the mood.
 
-It does not use AI. The whole personality of the app comes from a curated SQLite-backed catalog of notes, tags, and aliases.
+It does not use AI.
+Everything comes from a local SQLite database that is generated from curated Python catalogs.
 
-## Try It
+## What It Does
 
-Install the one external dependency:
+- Takes short vibe phrases or sentence-like inputs
+- Strips filler words like `the`, `by`, and `and`
+- Matches exact tags, curated aliases, and fuzzy spellings
+- Returns 5 notes by default, with `-n` settable from 3 to 5
+- Avoids repeating the exact same notes for repeated prompts by using local history
 
-```bash
+## Run It
+
+Install dependencies:
+
+```powershell
 pip install -r requirements.txt
 ```
 
-Run a prompt:
+Run a vibe:
 
-```bash
-python main.py "blue winter morning"
+```powershell
+python main.py "moonlight"
 ```
 
-Or run it as a package:
+Or with the Python launcher you already have:
 
-```bash
-python -m you_left_a_scent "grunge summer"
+```powershell
+& 'C:\Users\tyler\AppData\Local\Python\pythoncore-3.14-64\python.exe' main.py "brutalist concrete"
 ```
 
-If you run it with no phrase, it will ask you for one:
+If you leave off the phrase, the app will ask you for one.
 
-```bash
-python main.py
-```
+## Good Inputs To Try
 
-The first run creates `you_left_a_scent.db` in the project root. That database is generated locally from the Python catalog files.
-
-## Example Prompts
-
-Try phrases like:
-
+- `kiss`
+- `moonlight`
+- `dirty`
 - `sad sunrise`
 - `early classroom morning`
 - `job interview`
 - `desert`
-- `black velvet desert`
 - `blue winter morning`
 - `liminal hallway`
 - `dreamcore classroom`
 - `grunge summer`
+- `brutalist concrete`
 - `dark academia library`
 - `avant-garde gallery opening`
 
-## How Matching Works
+## How It Works
 
-The app breaks your phrase into words and short phrases, then checks them against a local SQLite database.
+The app is fully local and rule-based.
+It uses:
 
-It looks for:
+- a note catalog in `you_left_a_scent/catalog/notes.py`
+- alias groups in `you_left_a_scent/catalog/aliases/`
+- tag categories in `you_left_a_scent/catalog/categories.py`
+- SQLite schema and seeding in `you_left_a_scent/db/`
+- deterministic matching logic in `you_left_a_scent/matching/`
 
-- exact vibe tags, like `rain`, `rose`, `desert`, or `winter`
-- curated aliases, like `job interview -> clean, polished, confident`
-- fuzzy matches through RapidFuzz, like `sunrize ~= sunrise`
+RapidFuzz is used only for string matching against the local catalog.
+It is not AI.
+It just helps the app catch typos and near-matches without needing a model.
 
-RapidFuzz is not AI. It only compares strings against the local catalog so the app can tolerate typos and near matches.
-
-The app also keeps a tiny local recommendation history. If you run the same vibe again, it will try to move toward different notes instead of giving you the exact same blend every time.
-
-## Project Structure
+## Project Layout
 
 ```text
 you_left_a_scent/
   catalog/
     aliases/
+      adjectives.py
       aesthetics.py
       colors.py
       emotions.py
+      events.py
+      expressions.py
       food_and_drinks.py
       places.py
       scenarios.py
@@ -84,6 +93,7 @@ you_left_a_scent/
     seed.py
   matching/
     fuzzy.py
+    history.py
     matcher.py
     models.py
     normalization.py
@@ -91,48 +101,40 @@ you_left_a_scent/
   cli.py
 ```
 
-The older files `data.py`, `database.py`, and `matcher.py` are still there as thin compatibility wrappers. They keep old imports working while the real code lives in the organized subpackages.
+The legacy wrapper files `data.py`, `database.py`, and `matcher.py` are still present for compatibility.
+The real code now lives in the structured subpackages above.
 
-The `catalog/syntax.py` file is the little language layer that strips out filler words like `the`, `by`, and `and` so the matcher can focus on the real content of a sentence.
+## Editing The Catalog
 
-## Adding More Vibes
-
-Most creative expansion happens in two places.
-
-Add new scent materials in:
+If you want to add new scent materials, edit:
 
 ```text
 you_left_a_scent/catalog/notes.py
 ```
 
-Add new prompt language in:
+If you want to teach the app new language like emotions, verbs, adjectives, seasons, places, or aesthetics, edit:
 
 ```text
 you_left_a_scent/catalog/aliases/
 ```
 
-Use `you_left_a_scent/catalog/aliases/food_and_drinks.py` for general meal, drink, and snack language.
-
-For example, aesthetics belong in:
-
-```text
-you_left_a_scent/catalog/aliases/aesthetics.py
-```
-
-If you add new tags and want them grouped cleanly, update:
+If you add new tag types and want them categorized cleanly, update:
 
 ```text
 you_left_a_scent/catalog/categories.py
 ```
 
-When the seed data changes, bump `SEED_VERSION` in:
+If the seed data changes, bump:
 
 ```text
 you_left_a_scent/db/seed.py
 ```
 
-That tells the app to refresh the generated SQLite database the next time it runs.
+That tells the app to refresh the generated SQLite database the next time it starts.
 
-## Why This Design
+## A Good Mental Model
 
-The project is meant to stay lightweight and personal. SQLite gives it a real local database without needing a server. RapidFuzz gives it a little flexibility without turning it into an AI app. The catalog files keep the taste and logic visible, editable, and yours.
+Think of this project like a tiny curated scent dictionary.
+The catalog defines the taste, the aliases teach the app how people actually speak, and SQLite holds the finished local database.
+
+That keeps the app lightweight, editable, and very much yours.
