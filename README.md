@@ -21,6 +21,12 @@ The app looks up vibe tags in a local SQLite database and returns 3 to 5 scent n
 
 ## Run it
 
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
 ```bash
 python main.py "romantic night out"
 ```
@@ -33,3 +39,4 @@ python -m you_left_a_scent "robotic sunrise"
 
 The first run creates `you_left_a_scent.db` in the project root.
 
+Matching is still local and database-driven. RapidFuzz only helps compare user input against the local tags and aliases.

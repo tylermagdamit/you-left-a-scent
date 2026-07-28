@@ -35,6 +35,14 @@ TAG_CATEGORIES = OrderedDict(
 
 
 EMOTION_ALIASES = {
+    "classroom": ["paper", "cedar", "morning", "clean", "nostalgic", "quiet"],
+    "school": ["paper", "cedar", "morning", "clean", "nostalgic", "quiet"],
+    "early classroom": ["paper", "morning", "quiet", "clean", "sunrise", "nostalgic"],
+    "classroom morning": ["paper", "morning", "sunrise", "clean", "nostalgic", "cedar"],
+    "job interview": ["confident", "polished", "white shirt", "clean", "cedar", "bergamot", "musk"],
+    "interview": ["confident", "polished", "white shirt", "clean", "cedar", "bergamot"],
+    "first day": ["anxious", "hopeful", "clean", "white shirt", "bergamot", "cedar"],
+    "office": ["polished", "white shirt", "clean", "cedar", "minimal", "confident"],
     "sad": ["sad", "melancholy", "lonely", "quiet", "muted", "rain", "iris", "violet", "musk"],
     "depressed": ["sad", "melancholy", "quiet", "muted", "rain", "comforted"],
     "blue": ["sad", "melancholy", "rain", "cool", "marine"],
@@ -424,7 +432,7 @@ NOTE_SEEDS = [
         "role": "heart",
         "description": "Soft paper dust with a private, remembered quality.",
         "fallback": 0,
-        "tags": ["nostalgic", "quiet", "powdery", "minimal", "soft", "artistic"],
+        "tags": ["paper", "nostalgic", "quiet", "powdery", "minimal", "soft", "artistic"],
     },
     {
         "name": "Heliotrope",
