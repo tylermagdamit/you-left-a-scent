@@ -58,11 +58,19 @@ def _load_match_choices(conn: sqlite3.Connection) -> tuple[dict[str, tuple[int, 
     return direct_choices, alias_choices
 
 
-def _fuzzy_matches(terms: list[str], choices: list[str], limit: int = 3) -> list[tuple[str, int, str]]:
+def _fuzzy_matches(
+    terms: list[str],
+    choices: list[str],
+    limit: int = 3,
+    excluded_terms: set[str] | None = None,
+) -> list[tuple[str, int, str]]:
     _require_rapidfuzz()
 
+    excluded_terms = excluded_terms or set()
     matches: list[tuple[str, int, str]] = []
     for term in terms:
+        if term in excluded_terms:
+            continue
         term_word_count = len(term.split())
         for choice, score, _ in process.extract(
             term,
@@ -87,6 +95,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
 
     term_weights = {term: (4 if " " in term else 3) for term in terms}
     direct_choices, alias_choices = _load_match_choices(conn)
+    exact_terms: set[str] = set()
 
     direct_rows = conn.execute(
         f"""
@@ -96,6 +105,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
         """,
         terms,
     ).fetchall()
+    exact_terms.update(row["tag"] for row in direct_rows)
 
     alias_rows = conn.execute(
         f"""
@@ -106,6 +116,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
         """,
         terms,
     ).fetchall()
+    exact_terms.update(row["input_term"] for row in alias_rows)
 
     matched_tag_weights: dict[int, int] = {}
     matched_tag_names: dict[int, str] = {}
@@ -125,7 +136,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
         matched_tag_weights[tag_id] = max(matched_tag_weights.get(tag_id, 0), int(row["boost"]))
 
     tag_choices = list(direct_choices)
-    for matched_choice, score, input_term in _fuzzy_matches(terms, tag_choices):
+    for matched_choice, score, input_term in _fuzzy_matches(terms, tag_choices, excluded_terms=exact_terms):
         tag_id, category = direct_choices[matched_choice]
         matched_tag_names[tag_id] = matched_choice
         matched_tag_weights[tag_id] = max(matched_tag_weights.get(tag_id, 0), _weight_from_fuzzy_score(score, input_term))
@@ -133,7 +144,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 4) -> tuple
         if category != "emotion":
             concrete_tag_names.add(matched_choice)
 
-    for matched_alias, score, input_term in _fuzzy_matches(terms, list(alias_choices)):
+    for matched_alias, score, input_term in _fuzzy_matches(terms, list(alias_choices), excluded_terms=exact_terms):
         for row in alias_choices[matched_alias]:
             tag_id = int(row["id"])
             matched_tag_names[tag_id] = row["tag"]
