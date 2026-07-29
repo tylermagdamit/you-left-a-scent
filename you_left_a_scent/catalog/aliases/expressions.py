@@ -4,6 +4,24 @@ from __future__ import annotations
 
 
 EXPRESSION_ALIASES = {
+    # Poetic / narrative language.  Keep complete phrases here when their
+    # combined meaning should outweigh the individual words.
+    "die": ["grief", "incense", "smoke", "iris", "myrrh", "dark", "quiet"],
+    "died": ["grief", "incense", "smoke", "iris", "myrrh", "dark", "quiet"],
+    "dead": ["empty", "cold", "incense", "smoke", "iris", "dark", "quiet"],
+    "died tonight": ["grief", "night", "incense", "smoke", "iris", "myrrh", "dark"],
+    "fade": ["quiet", "musk", "iris", "violet", "powdery", "soft", "muted"],
+    "fading": ["quiet", "musk", "iris", "violet", "powdery", "soft", "muted"],
+    "vanish": ["liminal", "ozone", "musk", "cold", "quiet", "gray", "airy"],
+    "vanishing": ["liminal", "ozone", "musk", "cold", "quiet", "gray", "airy"],
+    "haunt": ["incense", "smoke", "mossy", "night", "iris", "dark", "mysterious"],
+    "haunting": ["incense", "smoke", "mossy", "night", "iris", "dark", "mysterious"],
+    "bleed": ["rose", "metallic", "smoke", "dark", "velvet", "intense", "tension"],
+    "bleeding": ["rose", "metallic", "smoke", "dark", "velvet", "intense", "tension"],
+    "fall apart": ["sad", "rain", "musk", "smoke", "quiet", "vulnerable", "muted"],
+    "falling apart": ["sad", "rain", "musk", "smoke", "quiet", "vulnerable", "muted"],
+    "burn out": ["burned out", "smoke", "rain", "musk", "muted", "comforted", "quiet"],
+    "burning out": ["burned out", "smoke", "rain", "musk", "muted", "comforted", "quiet"],
     "love": ["romantic", "in love", "rose", "jasmine", "amber", "vanilla", "skin"],
     "i love you": ["romantic", "in love", "rose", "jasmine", "amber", "vanilla", "skin"],
     "kiss": ["romantic", "in love", "rose", "jasmine", "skin", "vanilla", "sensual"],

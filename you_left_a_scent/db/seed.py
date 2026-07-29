@@ -7,7 +7,7 @@ import sqlite3
 from you_left_a_scent.catalog import NOTE_SEEDS, VIBE_ALIASES, category_for_tag
 
 
-SEED_VERSION = 23
+SEED_VERSION = 25
 
 
 def clear_seed_data(conn: sqlite3.Connection) -> None:

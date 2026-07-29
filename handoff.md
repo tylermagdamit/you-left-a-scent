@@ -48,7 +48,7 @@ you-left-a-scent/
 
 ### Input → Output Pipeline
 
-1. **Normalize** (`normalization.py`): Lowercase, extract words + 2-word phrases, filter filler words
+1. **Normalize** (`normalization.py`): Lowercase, filter filler words, then extract words plus 2- to 4-word phrases
 2. **Match** (`matcher.py`):
    - Exact tag matches against `vibe_tags` table
    - Alias lookups against `vibe_aliases` table
@@ -96,6 +96,7 @@ Edit the appropriate file in `catalog/aliases/`. Each alias maps an input term �
 - Keep 5–7 tags per alias
 - Tags should be scent-relevant (not abstract concepts)
 - Multi-word phrases get a boost of 3; single-word get 2 (or 4 if exact match)
+- For poetic language, add the conjugations people will actually type (for example, both `"fade"` and `"fading"`) and add a phrase when its combined meaning matters (for example, `"died tonight"`).
 
 ### Adding New Tag Categories
 

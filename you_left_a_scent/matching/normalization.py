@@ -8,6 +8,7 @@ from ..catalog.syntax import SENTENCE_FILLER_WORDS
 
 
 WORD_RE = re.compile(r"[a-z0-9]+(?:[-'][a-z0-9]+)*")
+MAX_PHRASE_WORDS = 4
 
 
 def normalize_terms(text: str) -> list[str]:
@@ -26,5 +27,13 @@ def normalize_terms(text: str) -> list[str]:
     if current_chunk:
         chunks.append(current_chunk)
 
-    phrases = [" ".join(chunk[i : i + 2]) for chunk in chunks for i in range(len(chunk) - 1)]
+    # Preserve short, natural-language fragments as well as individual words.
+    # Curated aliases can therefore express a whole image ("died tonight")
+    # instead of relying on its words to match independently.
+    phrases = [
+        " ".join(chunk[i : i + size])
+        for chunk in chunks
+        for size in range(2, min(MAX_PHRASE_WORDS, len(chunk)) + 1)
+        for i in range(len(chunk) - size + 1)
+    ]
     return list(dict.fromkeys(raw_terms + phrases))

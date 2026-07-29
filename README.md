@@ -52,6 +52,8 @@ If you leave off the phrase, the app will ask you for one.
 - `brutalist concrete`
 - `dark academia library`
 - `avant-garde gallery opening`
+- `you died tonight`
+- `i am falling apart beneath the moon`
 
 ## How It Works
 
@@ -112,7 +114,7 @@ If you want to add new scent materials, edit:
 you_left_a_scent/catalog/notes.py
 ```
 
-If you want to teach the app new language like emotions, verbs, adjectives, seasons, places, or aesthetics, edit:
+If you want to teach the app new language like emotions, verbs, poetic phrases, adjectives, seasons, places, or aesthetics, edit:
 
 ```text
 you_left_a_scent/catalog/aliases/

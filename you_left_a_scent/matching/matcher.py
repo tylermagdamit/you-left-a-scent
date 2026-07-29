@@ -43,6 +43,15 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
         terms,
     ).fetchall()
     exact_terms.update(row["input_term"] for row in alias_rows)
+    # A recognized phrase is stronger evidence than its component words.
+    # Do not let those components produce unrelated fuzzy matches (for
+    # example, "apart" ~= "party" after matching "falling apart").
+    fuzzy_exclusions = exact_terms | {
+        word
+        for term in exact_terms
+        if " " in term
+        for word in term.split()
+    }
 
     matched_tag_weights: dict[int, int] = {}
     matched_tag_names: dict[int, str] = {}
@@ -64,7 +73,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
     for matched_choice, score, input_term in fuzzy_matches(
         terms,
         list(direct_choices),
-        excluded_terms=exact_terms,
+        excluded_terms=fuzzy_exclusions,
     ):
         tag_id, category = direct_choices[matched_choice]
         matched_tag_names[tag_id] = matched_choice
@@ -79,7 +88,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
     for matched_alias, score, input_term in fuzzy_matches(
         terms,
         list(alias_choices),
-        excluded_terms=exact_terms,
+        excluded_terms=fuzzy_exclusions,
     ):
         for row in alias_choices[matched_alias]:
             tag_id = int(row["id"])
