@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Sequence
 
 from .db import connect, default_db_path, initialize
-from .matching import recommend
+from .matching import recommend, visual_direction
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -41,13 +41,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(f"Vibe: {vibe_text}")
     if matched_tags:
         print(f"Matched tags: {', '.join(matched_tags[:8])}")
+        theme = visual_direction(matched_tags, notes)
+        print(f"Visual direction: {theme.name} ({theme.background} / {theme.accent})")
     else:
         print("Matched tags: none, using fallback scent anchors")
     print()
 
     for index, note in enumerate(notes, start=1):
         print(f"{index}. {note.name} [{note.role}]")
-        print(f"   {note.description}")
+        print(f"   {note.description.replace(chr(10), chr(10) + '   ')}")
         if note.matched_tags:
             print(f"   Why it fits: {', '.join(note.matched_tags)}")
         print()

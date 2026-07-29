@@ -71,4 +71,10 @@ SCENARIO_ALIASES = {
     "new beginning": ["hopeful", "bright", "clean", "citrus", "fresh", "sunrise", "bergamot"],
     "goodbye": ["nostalgic", "sad", "paper", "iris", "vanilla", "quiet", "musk"],
     "welcome home": ["comforted", "warm", "vanilla", "musk", "soft", "clean", "amber"],
+    "rainy window": ["rain", "petrichor", "musk", "quiet", "gray", "soft", "reflective"],
+    "midnight conversation": ["night", "black tea", "musk", "amber", "quiet", "intimate", "smoke"],
+    "first apartment": ["linen", "clean", "cedar", "musk", "paper", "warm", "minimal"],
+    "long train ride": ["ozone", "metallic", "rain", "paper", "quiet", "restless", "nostalgic"],
+    "beach bonfire": ["smoke", "sea salt", "coconut", "amber", "warm", "night", "woody"],
+    "late night study": ["coffee", "paper", "cedar", "black tea", "focused", "quiet", "night"],
 }

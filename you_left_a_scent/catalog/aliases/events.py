@@ -20,4 +20,10 @@ EVENT_ALIASES = {
     "date night": ["romantic", "rose", "jasmine", "amber", "sandalwood", "luminous"],
     "picnic": ["spring", "green", "apple skin", "hay", "fresh", "bright"],
     "concert": ["neon", "smoke", "electric", "amber", "night out", "bold"],
+    "housewarming": ["clean", "linen", "cedar", "vanilla", "warm", "comforted", "champagne accord"],
+    "engagement": ["rose", "champagne accord", "sparkling", "romantic", "luminous", "gold", "happy"],
+    "prom": ["rose", "pink", "sparkling", "vanilla", "night out", "romantic", "luminous"],
+    "homecoming": ["nostalgic", "rose", "champagne accord", "warm", "happy", "paper", "night out"],
+    "farewell party": ["nostalgic", "iris", "smoke", "champagne accord", "quiet", "warm", "bittersweet"],
+    "rave": ["neon", "electric", "ozone", "smoke", "metallic", "bold", "night out"],
 }

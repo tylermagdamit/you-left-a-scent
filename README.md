@@ -11,8 +11,11 @@ Everything comes from a local SQLite database that is generated from curated Pyt
 - Takes short vibe phrases or sentence-like inputs
 - Strips filler words like `the`, `by`, and `and`
 - Matches exact tags, curated aliases, and fuzzy spellings
+- Uses aliases as input-to-tag translations; notes rank from the resulting tags
 - Returns 5 notes by default, with `-n` settable from 3 to 5
 - Avoids repeating the exact same notes for repeated prompts by using local history
+- Produces a broad visual direction and color palette a future GUI can use
+- Uses lowercase, soft-spoken note descriptions while preserving each material's character
 
 ## Run It
 
@@ -100,6 +103,7 @@ you_left_a_scent/
     models.py
     normalization.py
     repository.py
+    visuals.py
   cli.py
 ```
 
@@ -113,6 +117,10 @@ If you want to add new scent materials, edit:
 ```text
 you_left_a_scent/catalog/notes.py
 ```
+
+Each entry has a lower-case, concrete scent description and focused tags. Use
+tags for smell facets people might type, such as `citrus peel`, `wet stone`,
+`petals`, `dry wood`, or `paper fiber`; avoid broad catch-all tags.
 
 If you want to teach the app new language like emotions, verbs, poetic phrases, adjectives, seasons, places, or aesthetics, edit:
 
@@ -134,9 +142,34 @@ you_left_a_scent/db/seed.py
 
 That tells the app to refresh the generated SQLite database the next time it starts.
 
+An alias is an input-to-tag translation. For example, `"night market"` maps to
+tags including `spicy`, `ginger`, `smoke`, and `neon`; notes carrying those tags
+are then ranked. A tag already attached directly to a note, such as
+`paper fiber`, also works as an input without a separate alias.
+
 ## A Good Mental Model
 
 Think of this project like a tiny curated scent dictionary.
 The catalog defines the taste, the aliases teach the app how people actually speak, and SQLite holds the finished local database.
 
 That keeps the app lightweight, editable, and very much yours.
+
+## Visual Directions for a GUI
+
+`visual_direction(matched_tags, notes)` groups detailed scent evidence into
+eight broad families: `sunlit`, `blush`, `stillness`, `midnight`, `storm`,
+`electric`, `earth`, and `warmth`. It returns five hex colors plus the first
+returned `top`, `heart`, and `base` note names as `note_layers`, so the GUI can
+use the scent's existing fields as visual anchors. Matched tags choose the
+family; note names are only a fallback. Happy/bright/citrus inputs,
+for example, resolve to the yellow-accented `sunlit` theme.
+
+```python
+from you_left_a_scent.matching import recommend, visual_direction
+
+notes, matched_tags = recommend(conn, vibe_text)
+theme = visual_direction(matched_tags, notes)
+```
+
+`theme` provides `background`, `surface`, `accent`, `text`, `glow`, and
+`note_layers` (the selected top/heart/base notes) for a GUI.

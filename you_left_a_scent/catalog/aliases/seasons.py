@@ -44,4 +44,10 @@ SEASON_ALIASES = {
     "summer dusk": ["coconut", "jasmine", "amber", "warm", "night air", "soft", "marine"],
     "winter night": ["snow", "cold", "quiet", "musk", "starlight", "dark", "pine"],
     "spring drizzle": ["rain", "green", "fresh", "petrichor", "soft", "floral", "clean"],
+    "thunderstorm": ["rain", "ozone", "electric", "dark", "smoke", "restless", "cold"],
+    "heat haze": ["sunbaked", "dry heat", "amber", "mineral", "warm", "desert", "golden"],
+    "misty morning": ["mist", "ozone", "white tea", "quiet", "cool", "fresh", "soft"],
+    "crisp morning": ["fresh air", "cold", "citrus", "pine", "clean", "bright", "daylight"],
+    "summer storm": ["rain", "ozone", "coconut", "green", "humid", "electric", "warm"],
+    "harvest": ["apple", "cedar", "cinnamon", "amber", "golden", "dry", "autumn"],
 }

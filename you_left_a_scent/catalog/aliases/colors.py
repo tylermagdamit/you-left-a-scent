@@ -40,4 +40,10 @@ COLOR_ALIASES = {
     "pastel": ["pastel", "soft", "powdery", "peony", "cherry blossom", "airy"],
     "black velvet": ["black", "velvet", "plum", "incense", "rose", "dark"],
     "white winter": ["white", "winter", "snow", "musk", "clean", "frost"],
+    "lavender": ["lavender", "violet", "iris", "soft", "calm", "powdery", "dreamy"],
+    "rose gold": ["rose", "golden", "amber", "pink", "warm", "luxury", "luminous"],
+    "emerald": ["green", "fig leaf", "forest", "mossy", "herbal", "rich", "earthy"],
+    "amber": ["amber", "golden", "warm", "vanilla", "luxury", "resinous", "sensual"],
+    "lilac": ["violet", "iris", "powdery", "floral", "soft", "spring", "dreamy"],
+    "aqua": ["marine", "ozone", "water", "fresh", "clean", "airy", "blue"],
 }

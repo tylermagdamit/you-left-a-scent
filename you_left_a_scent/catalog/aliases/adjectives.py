@@ -21,4 +21,10 @@ ADJECTIVE_ALIASES = {
     "fuzzy": ["fuzzy", "cashmeran", "musk", "suede", "soft", "warm"],
     "powdery": ["powdery", "iris", "orris butter", "heliotrope", "violet", "satin"],
     "sticky": ["sticky", "honey", "benzoin", "labdanum", "resinous", "amber"],
+    "glossy": ["glossy", "aldehydes", "pink", "metallic", "clean", "luminous", "synthetic"],
+    "hazy": ["hazy", "musk", "iris", "smoke", "soft", "muted", "dreamy"],
+    "velvety": ["velvet", "plum", "rose", "amber", "soft", "dark", "sensual"],
+    "crisp": ["crisp", "citrus", "fresh air", "mint", "clean", "cold", "bright"],
+    "dewy": ["dew", "green", "peony", "rain", "fresh", "soft", "spring"],
+    "luminous": ["luminous", "amber", "iris", "sparkling", "white amber", "soft", "golden"],
 }

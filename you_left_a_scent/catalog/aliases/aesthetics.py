@@ -71,4 +71,11 @@ AESTHETIC_ALIASES = {
     "cottage garden": ["rose", "lavender", "green", "soil", "honey", "sunlit", "floral"],
     "midnight": ["night", "musk", "dark", "quiet", "smoke", "iris", "velvet"],
     "golden hour": ["amber", "honey", "warm", "golden", "sunlit", "solar", "comforting"],
+    "indie folk": ["cedar", "paper", "honey", "warm", "nostalgic", "forest", "soft"],
+    "balletcore": ["pink", "satin", "peony", "powdery", "soft", "vanilla", "romantic"],
+    "mermaidcore": ["marine", "sea salt", "ozone", "pearl", "blue", "shimmering", "aquatic"],
+    "dark coquette": ["black", "rose", "cherry", "vanilla", "velvet", "smoke", "flirty"],
+    "whimsigoth": ["violet", "incense", "mossy", "moonlight", "velvet", "mysterious", "dreamy"],
+    "naturecore": ["forest", "green", "mossy", "rain", "wildflower", "fresh air", "earthy"],
+    "angelcore": ["white", "cloud musk", "iris", "soft", "luminous", "clean", "airy"],
 }

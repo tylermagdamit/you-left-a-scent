@@ -52,4 +52,10 @@ EMOTION_ALIASES = {
     "reflective": ["reflective", "quiet", "paper", "black tea", "iris", "musk", "calm"],
     "melancholic": ["melancholic", "sad", "rain", "violet", "iris", "muted", "nostalgic"],
     "energetic": ["energetic", "bright", "citrus", "ginger", "sparkling", "fresh", "daylight"],
+    "numb": ["detached", "cold", "minimal", "concrete", "quiet", "muted", "musk"],
+    "empty": ["empty", "liminal", "concrete", "fluorescent", "gray", "quiet", "musk"],
+    "fragile": ["vulnerable", "iris", "musk", "powdery", "soft", "quiet", "skin"],
+    "restored": ["hopeful", "clean", "fresh", "white tea", "musk", "sunrise", "calm"],
+    "free": ["airy", "ozone", "fresh air", "citrus", "bright", "open air", "daylight"],
+    "alive": ["energetic", "green", "citrus", "sunlit", "fresh", "sparkling", "warm"],
 }

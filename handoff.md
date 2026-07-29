@@ -2,144 +2,154 @@
 
 ## Overview
 
-A deterministic scent recommendation engine that turns short "vibe" phrases (e.g. "robotic sunrise", "romantic night out") into 3–5 perfume notes using a local SQLite database. No AI — pure tag-based matching with fuzzy fallback.
+`You Left a Scent` is a deterministic, local fragrance-vibe engine. It turns a
+phrase or short sentence into three to five scent notes, matched tags, and a
+GUI-ready visual direction. It uses a curated Python catalog and SQLite; it
+does not use AI or external services.
 
-## Repository Structure
+## Current Architecture
 
-```
-you-left-a-scent/
-├── main.py                          # Entry point
-├── requirements.txt                 # Dependencies (rapidfuzz, etc.)
-├── you_left_a_scent/
-│   ├── cli.py                       # CLI argument parsing and output
-│   ├── data.py                      # Backward-compat catalog access
-│   ├── matcher.py                   # Backward-compat matching imports
-│   ├── database.py                  # Backward-compat DB queries
-│   ├── catalog/                     # Seed data (the "knowledge base")
-│   │   ├── notes.py                 # 110+ scent note definitions with tags
-│   │   ├── categories.py            # Tag category groupings
-│   │   ├── syntax.py                # Filler words filtered from input
-│   │   └── aliases/                 # Vibe → tag mappings
-│   │       ├── adjectives.py        # Texture/descriptor aliases
-│   │       ├── aesthetics.py        # Aesthetic/style aliases (50+)
-│   │       ├── colors.py            # Color → tag mappings
-│   │       ├── emotions.py          # Emotion → tag mappings (45+)
-│   │       ├── events.py            # Event/celebration aliases
-│   │       ├── expressions.py       # Verb/expression aliases
-│   │       ├── food_and_drinks.py   # Food/drink aliases (40+)
-│   │       ├── places.py            # Location aliases (50+)
-│   │       ├── scenarios.py         # Scenario aliases (40+)
-│   │       └── seasons.py           # Season/weather aliases (40+)
-│   ├── matching/                    # Matching engine
-│   │   ├── matcher.py               # Core recommendation logic
-│   │   ├── fuzzy.py                 # RapidFuzz fuzzy matching
-│   │   ├── normalization.py         # Input text → normalized terms
-│   │   ├── models.py                # ScentRecommendation dataclass
-│   │   ├── repository.py            # SQLite query helpers
-│   │   └── history.py               # Repeat-penalty history
-│   └── db/                          # Database layer
-│       ├── connection.py            # SQLite connection helpers
-│       ├── schema.py                # Table creation + seed check
-│       └── seed.py                  # Database seeding (SEED_VERSION = 21)
-└── you_left_a_scent.db              # Auto-generated SQLite database
+```text
+main.py                         # Entry point
+you_left_a_scent/
+  cli.py                        # CLI output, including visual direction
+  catalog/
+    notes.py                    # 130 note records: name, role, description, tags
+    categories.py               # Fine-grained tag categories
+    syntax.py                   # Filler words for sentence parsing
+    aliases/                    # Input phrase -> tag mappings
+  db/
+    seed.py                     # SQLite seed version and catalog seeding
+    schema.py
+    connection.py
+  matching/
+    normalization.py            # Words + 2- to 4-word phrase extraction
+    matcher.py                  # Exact, alias, fuzzy matching, ranking
+    fuzzy.py                    # RapidFuzz fallback safeguards
+    history.py                  # Repeat penalties
+    models.py                   # ScentRecommendation
+    repository.py               # SQLite lookups
+    visuals.py                  # GUI palette and note-layer resolver
 ```
 
-## How It Works
+## Input to Output
 
-### Input → Output Pipeline
+1. `normalization.py` lowercases input, removes filler words, and preserves
+   individual words plus two- to four-word phrases.
+2. `matcher.py` finds exact direct-tag matches and curated alias matches, then
+   uses guarded fuzzy matching for spelling and close phrasing.
+3. Matched tags score notes with the same tags. The engine balances note roles,
+   avoids recently repeated results, and returns 3–5 notes.
+4. `visual_direction(matched_tags, notes)` resolves a GUI palette and returns
+   selected top/heart/base notes as visual layers.
 
-1. **Normalize** (`normalization.py`): Lowercase, filter filler words, then extract words plus 2- to 4-word phrases
-2. **Match** (`matcher.py`):
-   - Exact tag matches against `vibe_tags` table
-   - Alias lookups against `vibe_aliases` table
-   - Fuzzy fallback via `fuzzy.py` (RapidFuzz WRatio, cutoff 78)
-3. **Score** (`matcher.py`): Notes scored by matched tags × weights, with repeat penalties
-4. **Rank & Select**: Top 3–5 unique notes, ensuring concrete tag representation
-
-### Key Design Decisions
-
-- **No AI**: Fully deterministic, reproducible results
-- **Local SQLite**: Portable, no external services
-- **Repeat Penalties**: Same input gets variety across calls (history table)
-- **Fallback Notes**: Notes with `is_fallback=1` used when no tags match
-- **Fuzzy Matching**: Only for terms ≥ 4 chars; substring penalty applied to avoid false positives (e.g. "man" → "mandarin")
-
-## How to Expand the Catalog
-
-### Adding New Scent Notes
-
-Edit `catalog/notes.py`. Each note needs:
+Aliases are input-to-tag translations. For example:
 
 ```python
-{'name': 'Note Name',
- 'role': 'top' | 'heart' | 'base',
- 'description': 'One-line evocative description.',
- 'fallback': 0,  # 1 = shown when no tags match
- 'tags': ['tag1', 'tag2', ...]},  # 5-7 specific tags
+"night market": ["spicy", "ginger", "smoke", "neon", "citrus", "warm", "electric"]
 ```
 
-**Guidelines:**
-- Keep tags specific, not generic (avoid overusing "clean", "soft", "warm")
-- First tag is auto-derived from the note name (lowercased)
-- Use existing tags when possible; add new tags sparingly
-- Tags get auto-categorized via `categories.py`
+The notes carrying those tags are ranked. Direct tags on a note, such as
+`paper fiber`, also match input without a separate alias.
 
-### Adding New Aliases
+## Catalog Editing
 
-Edit the appropriate file in `catalog/aliases/`. Each alias maps an input term → list of tags:
+### Notes
+
+Edit `you_left_a_scent/catalog/notes.py`.
 
 ```python
-"input phrase": ["tag1", "tag2", "tag3", ...],
+{
+    "name": "Example Note",
+    "role": "top",  # top, heart, or base
+    "description": "lower-case, concrete scent description",
+    "fallback": 0,
+    "tags": ["specific material", "scent facet", "texture"],
+}
 ```
 
-**Guidelines:**
-- Keep 5–7 tags per alias
-- Tags should be scent-relevant (not abstract concepts)
-- Multi-word phrases get a boost of 3; single-word get 2 (or 4 if exact match)
-- For poetic language, add the conjugations people will actually type (for example, both `"fade"` and `"fading"`) and add a phrase when its combined meaning matters (for example, `"died tonight"`).
+Descriptions should say how the material smells: ingredients, texture, and
+odor facets first. Keep them lower-case and concise; avoid abstract emotional
+or generic atmospheric claims.
 
-### Adding New Tag Categories
+Tags should be specific and useful as user input. Good examples include
+`citrus peel`, `wet stone`, `petals`, `dry wood`, `paper fiber`, `amber resin`,
+and `balsamic`. Avoid assigning broad tags such as `clean`, `soft`, or `warm`
+to every note because they make recommendations noisy.
 
-Edit `catalog/categories.py`. Add a new entry to `TAG_CATEGORIES`:
+### Aliases
+
+Edit the relevant module in `catalog/aliases/` for places, scenarios, events,
+food and drink, seasons/weather, colors, aesthetics, emotions, expressions,
+or descriptors.
 
 ```python
-("category_name", _group("tag1", "tag2", "tag3")),
+"input phrase": ["tag1", "tag2", "tag3"],
 ```
 
-This helps `category_for_tag()` classify tags for the matching engine.
+Use existing note tags whenever possible. Add the verb forms people will type
+when appropriate, and add a multi-word alias when the combined phrase has a
+distinct meaning.
 
-### After Changes
+### Categories
 
-1. Bump `SEED_VERSION` in `db/seed.py` (increment by 1)
-2. Delete `you_left_a_scent.db` to force re-seed
-3. Run `python main.py "your test vibe"` to verify
+`catalog/categories.py` classifies tags for matching. Add a category only when
+it improves organization; it is not required for every new tag.
 
-## Fuzzy Matching Details
+## Visual Directions for a GUI
 
-Located in `matching/fuzzy.py`:
+`matching/visuals.py` maps matched tags into one of eight broad visual families:
 
-- **Scorer**: `rapidfuzz.fuzz.WRatio`
-- **Cutoff**: 78 (base), 92 for substring matches
-- **Min term length**: 4 characters (avoids "man" → "mandarin")
-- **Word count guard**: Only matches terms with same word count
-- **Substring penalty**: If input is a substring of candidate, requires score ≥ 92
+- `sunlit`
+- `blush`
+- `stillness`
+- `midnight`
+- `storm`
+- `electric`
+- `earth`
+- `warmth`
 
-## Testing
+Use it after recommendations:
 
-```bash
-# Basic usage
-python main.py "robotic sunrise"
+```python
+from you_left_a_scent.matching import recommend, visual_direction
 
-# With custom count
-python main.py -n 3 "romantic night out"
-
-# Re-seed database
-rm you_left_a_scent.db && python main.py "test"
+notes, matched_tags = recommend(conn, vibe_text)
+theme = visual_direction(matched_tags, notes)
 ```
+
+`theme` contains `background`, `surface`, `accent`, `text`, and `glow` hex
+colors, plus `note_layers`: the first returned top, heart, and base note names.
+Matched tags choose the family; note names are used only as a fallback. Update
+the signal tags or hex values in `visuals.py` to tune the visual system; no DB
+reseed is required for that change.
+
+## Database Refresh and Verification
+
+When changing `notes.py`, aliases, or categories:
+
+1. Increment `SEED_VERSION` in `you_left_a_scent/db/seed.py`.
+2. Run a test prompt. Initialization detects the new version and refreshes the
+   local SQLite database automatically.
+
+```powershell
+python main.py "night market"
+python main.py "paper fiber"
+python main.py "dark academia library"
+```
+
+## Matching Safeguards
+
+- RapidFuzz uses `WRatio` with a base cutoff of 78.
+- Terms shorter than four characters skip fuzzy matching.
+- Candidate and input must have the same word count.
+- Substring matches require a score of at least 92.
+- When a phrase is recognized exactly, its component words are excluded from
+  fuzzy matching to avoid unrelated results such as `apart` matching `party`.
 
 ## Common Pitfalls
 
-- **Duplicate keys in alias dicts**: Python dicts silently keep last value. Check for duplicates when adding.
-- **Over-tagging**: Too many generic tags (clean, soft, warm) make notes match everything → noisy results.
-- **Fuzzy false positives**: Short terms (< 4 chars) are now skipped. Substring matches require higher score.
-- **Seed version**: Always bump `SEED_VERSION` when changing catalog data, or the DB won't update.
+- Duplicate keys in an alias dictionary silently overwrite earlier entries.
+- Alias tags that no note carries will not help recommendation ranking.
+- Broad tags on too many notes make results less distinctive.
+- Catalog changes require a `SEED_VERSION` bump before they appear in SQLite.

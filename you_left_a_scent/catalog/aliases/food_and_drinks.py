@@ -46,4 +46,10 @@ FOOD_AND_DRINK_ALIASES = {
     "honey tea": ["honey", "tea", "warm", "comforting", "sweet", "calm", "golden"],
     "mulled wine": ["cinnamon", "clove", "warm", "spicy", "red", "cozy", "winter"],
     "cherry soda": ["cherry", "sweet", "sparkling", "bright", "red", "playful", "nostalgic"],
+    "strawberry milk": ["strawberry", "milk accord", "vanilla", "pink", "sweet", "soft", "creamy"],
+    "tiramisu": ["coffee", "cocoa", "vanilla", "cream", "gourmand", "warm", "sweet"],
+    "orange juice": ["orange", "citrus", "bright", "fresh", "sunrise", "happy", "juicy"],
+    "ramen": ["steam", "ginger", "sesame", "warm", "cozy", "spicy", "comforting"],
+    "strawberry shortcake": ["strawberry", "vanilla", "cream", "sweet", "pink", "soft", "gourmand"],
+    "iced matcha": ["matcha", "green tea", "milk accord", "fresh", "green", "calm", "creamy"],
 }

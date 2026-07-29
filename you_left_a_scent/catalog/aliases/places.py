@@ -55,4 +55,12 @@ PLACE_ALIASES = {
     "clinic": ["clean", "aldehydes", "white", "quiet", "calm", "sterile", "minimal"],
     "observatory": ["cold", "metal", "quiet", "night", "starlight", "scientific", "dark"],
     "rooftop garden": ["green", "city lights", "sunlit", "fresh air", "herbal", "quiet", "urban"],
+    "flower shop": ["rose", "peony", "green", "floral", "fresh", "wet", "sunlit"],
+    "record store": ["vinyl", "dusty", "paper", "cedar", "nostalgic", "warm", "smoke"],
+    "cinema": ["popcorn", "velvet", "dark", "sweet", "nostalgic", "night", "amber"],
+    "boardwalk": ["sea salt", "marine", "coconut", "sunlit", "sweet", "windy", "summer"],
+    "night market": ["spicy", "ginger", "smoke", "neon", "citrus", "warm", "electric"],
+    "flower field": ["wildflower", "green", "honey", "sunlit", "airy", "spring", "floral"],
+    "cabin": ["cedar", "pine", "smoke", "vanilla", "warm", "cozy", "forest"],
+    "seaside town": ["marine", "sea salt", "linen", "coconut", "sunlit", "fresh", "windy"],
 }
