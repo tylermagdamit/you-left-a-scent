@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>You Left a Scent</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <p class="eyebrow">a scent for the feeling</p>
+      <h1>you left<br>a scent.</h1>
+      <form id="vibe-form" class="prompt" novalidate>
+        <label for="vibe">what does it feel like?</label>
+        <div class="input-row">
+          <input id="vibe" name="vibe" autocomplete="off" placeholder="rainy window" maxlength="280" required>
+          <button type="submit">find it</button>
+        </div>
+        <p class="examples">try: night market &middot; paper fiber &middot; strawberry milk</p>
+      </form>
+      <p id="status" class="status" aria-live="polite"></p>
+      <section id="result" class="result" hidden>
+        <div class="result-head">
+          <div>
+            <p class="eyebrow">visual direction</p>
+            <h2 id="theme-name"></h2>
+          </div>
+          <div id="tags" class="tags"></div>
+        </div>
+        <div id="notes" class="notes"></div>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -168,6 +168,33 @@ environment-variable settings.
 
 That keeps the app lightweight, editable, and very much yours.
 
+## Website (Local)
+
+The first web version is a small FastAPI backend with a plain HTML, CSS, and
+JavaScript interface. Keep `DATABASE_URL` set in the PowerShell window where
+you start it, then run:
+
+```powershell
+& 'C:\Users\tyler\AppData\Local\Python\pythoncore-3.14-64\python.exe' -m uvicorn you_left_a_scent.web:app --reload --port 8000
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). The API is deliberately
+small: `POST /api/recommend` accepts `{ "vibe": "rainy window" }`, and
+`GET /api/health` confirms that the server is up.
+
+The web code is separated by responsibility:
+
+```text
+you_left_a_scent/
+  web.py                 # ASGI entry point
+  webapp/
+    app.py               # FastAPI assembly and static files
+    routes.py            # HTTP endpoints
+    schemas.py           # Request validation
+    service.py           # Database and recommendation adapter
+  web_static/            # Browser interface (HTML, CSS, JavaScript)
+```
+
 ## Visual Directions for a GUI
 
 `visual_direction(matched_tags, notes)` groups detailed scent evidence into

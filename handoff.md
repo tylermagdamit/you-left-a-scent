@@ -30,6 +30,13 @@ you_left_a_scent/
     models.py                   # ScentRecommendation
     repository.py               # PostgreSQL lookups
     visuals.py                  # GUI palette and note-layer resolver
+  web.py                        # ASGI entry point
+  webapp/
+    app.py                      # FastAPI assembly and static files
+    routes.py                   # HTTP endpoints
+    schemas.py                  # Request validation
+    service.py                  # Recommendation response adapter
+  web_static/                   # Simple browser interface
 ```
 
 ## Input to Output
@@ -123,6 +130,24 @@ colors, plus `note_layers`: the first returned top, heart, and base note names.
 Matched tags choose the family; note names are used only as a fallback. Update
 the signal tags or hex values in `visuals.py` to tune the visual system; no DB
 reseed is required for that change.
+
+## Local Website
+
+The website is a simple FastAPI wrapper around the same matcher and PostgreSQL
+catalog used by the CLI. The browser sends the phrase to `POST /api/recommend`;
+`webapp/service.py` runs the recommendation and returns notes, matched tags,
+and the existing visual family palette. The static interface then applies that
+palette to the page.
+
+Start it in a PowerShell session where `DATABASE_URL` is already set:
+
+```powershell
+& 'C:\Users\tyler\AppData\Local\Python\pythoncore-3.14-64\python.exe' -m uvicorn you_left_a_scent.web:app --reload --port 8000
+```
+
+Open `http://127.0.0.1:8000`. `GET /api/health` is a no-database health check.
+The default recommendation count is five and can be supplied as `count` (3-5)
+in the API JSON body when another interface needs it.
 
 ## Database Refresh and Verification
 

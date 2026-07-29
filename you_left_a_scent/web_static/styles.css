@@ -1,0 +1,16 @@
+:root { --background:#f4f3f0; --surface:#fff; --accent:#8a8175; --text:#292724; --glow:#ddd8cf; }
+* { box-sizing: border-box; }
+body { margin:0; min-height:100vh; background:radial-gradient(circle at 80% 10%, var(--glow), transparent 36%), var(--background); color:var(--text); font:16px/1.5 Georgia, serif; transition:background .45s ease, color .45s ease; }
+.shell { width:min(920px, calc(100% - 40px)); margin:0 auto; padding:clamp(64px, 12vw, 140px) 0; }
+.eyebrow,.role { margin:0; font:600 11px/1.2 Arial,sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.62; }
+h1 { margin:8px 0 42px; font-size:clamp(54px, 11vw, 110px); line-height:.84; letter-spacing:-.07em; font-weight:400; }
+h2 { margin:4px 0 0; font-size:32px; font-weight:400; text-transform:capitalize; }
+.prompt { max-width:650px; } label { display:block; margin-bottom:9px; font-size:20px; }
+.input-row { display:flex; gap:10px; } input,button { border:1px solid color-mix(in srgb, var(--text) 20%, transparent); border-radius:999px; font:inherit; }
+input { min-width:0; flex:1; padding:15px 20px; background:color-mix(in srgb, var(--surface) 82%, transparent); color:inherit; outline:none; }
+input:focus { border-color:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+button { padding:15px 23px; background:var(--text); color:var(--surface); cursor:pointer; }
+.examples,.status { margin:10px 3px; font:13px/1.4 Arial,sans-serif; opacity:.65; }.status { min-height:20px; color:var(--accent); }
+.result { margin-top:58px; }.result-head { display:flex; justify-content:space-between; gap:24px; align-items:end; border-bottom:1px solid color-mix(in srgb, var(--text) 16%, transparent); padding-bottom:18px; }.tags { display:flex; flex-wrap:wrap; justify-content:end; gap:6px; }.tags span { padding:5px 9px; border-radius:999px; background:color-mix(in srgb, var(--accent) 18%, transparent); font:11px Arial,sans-serif; }
+.notes { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:16px; }.note { min-height:155px; padding:20px; border-radius:18px; background:color-mix(in srgb, var(--surface) 82%, transparent); border:1px solid color-mix(in srgb, var(--text) 10%, transparent); }.note h3 { margin:22px 0 7px; font-size:22px; font-weight:400; }.description { margin:0; white-space:pre-line; opacity:.78; font-size:15px; }
+@media (max-width:600px) { .input-row,.result-head { flex-direction:column; align-items:stretch; }.tags { justify-content:start; } button { width:100%; } }
