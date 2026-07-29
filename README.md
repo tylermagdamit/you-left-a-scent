@@ -195,6 +195,9 @@ you_left_a_scent/
   web_static/            # Browser interface (HTML, CSS, JavaScript)
 ```
 
+`pyproject.toml` explicitly tells Vercel to use `you_left_a_scent.web:app`
+instead of the command-line `main.py` entry point.
+
 ## Visual Directions for a GUI
 
 `visual_direction(matched_tags, notes)` groups detailed scent evidence into

@@ -1,0 +1,2 @@
+[tool.vercel]
+entrypoint = "you_left_a_scent.web:app"
