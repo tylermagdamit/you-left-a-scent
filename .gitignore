@@ -13,11 +13,6 @@ build/
 dist/
 *.egg-info/
 
-# Local SQLite database generated on first run
-*.db
-*.db-shm
-*.db-wal
-
 # Tooling/editor noise
 .pytest_cache/
 .mypy_cache/

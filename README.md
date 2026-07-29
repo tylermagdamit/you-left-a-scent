@@ -4,7 +4,7 @@
 You type in a short sentence like `kiss`, `moonlight`, `brutalist concrete`, or `job interview`, and it returns scent notes that fit the mood.
 
 It does not use AI.
-Everything comes from a local SQLite database that is generated from curated Python catalogs.
+Everything comes from a PostgreSQL database seeded from curated Python catalogs.
 
 ## What It Does
 
@@ -66,7 +66,7 @@ It uses:
 - a note catalog in `you_left_a_scent/catalog/notes.py`
 - alias groups in `you_left_a_scent/catalog/aliases/`
 - tag categories in `you_left_a_scent/catalog/categories.py`
-- SQLite schema and seeding in `you_left_a_scent/db/`
+- PostgreSQL schema and seeding in `you_left_a_scent/db/`
 - deterministic matching logic in `you_left_a_scent/matching/`
 
 RapidFuzz is used only for string matching against the local catalog.
@@ -140,7 +140,7 @@ If the seed data changes, bump:
 you_left_a_scent/db/seed.py
 ```
 
-That tells the app to refresh the generated SQLite database the next time it starts.
+That tells the app to refresh the PostgreSQL catalog the next time it starts.
 
 An alias is an input-to-tag translation. For example, `"night market"` maps to
 tags including `spicy`, `ginger`, `smoke`, and `neon`; notes carrying those tags
@@ -150,7 +150,21 @@ are then ranked. A tag already attached directly to a note, such as
 ## A Good Mental Model
 
 Think of this project like a tiny curated scent dictionary.
-The catalog defines the taste, the aliases teach the app how people actually speak, and SQLite holds the finished local database.
+The catalog defines the taste, the aliases teach the app how people actually speak, and PostgreSQL holds the finished database.
+
+## PostgreSQL Setup
+
+The app reads its connection string from `DATABASE_URL`:
+
+```powershell
+$env:DATABASE_URL = "postgresql://postgres:YOUR_PASSWORD@localhost:8888/you_left_a_scent"
+python main.py "paper fiber"
+```
+
+On the first run, the app creates its tables and seeds the notes, tags, aliases,
+and visual data automatically. Do not commit a database password or connection
+string. For a deployed app, set `DATABASE_URL` in the hosting provider's
+environment-variable settings.
 
 That keeps the app lightweight, editable, and very much yours.
 

@@ -1,5 +1,5 @@
-from .connection import connect, default_db_path
+from .connection import connect
 from .schema import initialize
 
-__all__ = ["connect", "default_db_path", "initialize"]
+__all__ = ["connect", "initialize"]
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-import sqlite3
+from typing import Any
 
 from .fuzzy import fuzzy_matches, weight_from_fuzzy_score
 from .history import build_input_key, load_recent_note_names, load_repeat_penalties, record_recommendations
@@ -12,7 +12,7 @@ from .normalization import normalize_terms
 from .repository import load_fallback_notes, load_match_choices
 
 
-def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple[list[ScentRecommendation], list[str]]:
+def recommend(conn: Any, vibe_text: str, limit: int = 5) -> tuple[list[ScentRecommendation], list[str]]:
     limit = max(3, min(5, int(limit)))
     terms = normalize_terms(vibe_text)
     if not terms:
@@ -24,23 +24,15 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
     exact_terms: set[str] = set()
 
     direct_rows = conn.execute(
-        f"""
-        SELECT id, tag, category
-        FROM vibe_tags
-        WHERE tag IN ({",".join("?" for _ in terms)})
-        """,
-        terms,
+        "SELECT id, tag, category FROM vibe_tags WHERE tag = ANY(%s)",
+        (terms,),
     ).fetchall()
     exact_terms.update(row["tag"] for row in direct_rows)
 
     alias_rows = conn.execute(
-        f"""
-        SELECT vt.id, vt.tag, va.input_term, va.boost
-        FROM vibe_aliases va
-        JOIN vibe_tags vt ON vt.id = va.tag_id
-        WHERE va.input_term IN ({",".join("?" for _ in terms)})
-        """,
-        terms,
+        """SELECT vt.id, vt.tag, va.input_term, va.boost FROM vibe_aliases va
+           JOIN vibe_tags vt ON vt.id = va.tag_id WHERE va.input_term = ANY(%s)""",
+        (terms,),
     ).fetchall()
     exact_terms.update(row["input_term"] for row in alias_rows)
     # A recognized phrase is stronger evidence than its component words.
@@ -148,7 +140,7 @@ def recommend(conn: sqlite3.Connection, vibe_text: str, limit: int = 5) -> tuple
     return unique[:limit], matched_tags
 
 
-def _fallback_recommendations(conn: sqlite3.Connection, limit: int) -> list[ScentRecommendation]:
+def _fallback_recommendations(conn: Any, limit: int) -> list[ScentRecommendation]:
     return [
         ScentRecommendation(
             name=row["name"],
@@ -162,7 +154,7 @@ def _fallback_recommendations(conn: sqlite3.Connection, limit: int) -> list[Scen
 
 
 def _rank_notes(
-    conn: sqlite3.Connection,
+    conn: Any,
     matched_tag_weights: dict[int, int],
     matched_weights_by_name: dict[str, int],
     fuzzy_source_terms: dict[str, set[str]],
@@ -172,16 +164,15 @@ def _rank_notes(
     evidence: dict[int, set[str]] = defaultdict(set)
     note_meta: dict[int, tuple[str, str, str]] = {}
 
-    placeholders = ",".join("?" for _ in matched_tag_weights)
     scored_rows = conn.execute(
-        f"""
+        """
         SELECT n.id, n.name, n.role, n.description, vt.tag, nvt.weight
         FROM note_vibe_tags nvt
         JOIN notes n ON n.id = nvt.note_id
         JOIN vibe_tags vt ON vt.id = nvt.tag_id
-        WHERE nvt.tag_id IN ({placeholders})
+        WHERE nvt.tag_id = ANY(%s)
         """,
-        tuple(matched_tag_weights),
+        (list(matched_tag_weights),),
     ).fetchall()
 
     for row in scored_rows:
@@ -240,7 +231,7 @@ def _represent_concrete_tags(
 
 
 def _fill_short_result(
-    conn: sqlite3.Connection,
+    conn: Any,
     recommendations: list[ScentRecommendation],
     seen: set[str],
     limit: int,
@@ -248,17 +239,16 @@ def _fill_short_result(
     if len(recommendations) >= limit:
         return
 
-    placeholders = ",".join("?" for _ in seen) if seen else "''"
-    remaining_rows = conn.execute(
-        f"""
-        SELECT name, role, description
-        FROM notes
-        WHERE name NOT IN ({placeholders})
-        ORDER BY is_fallback DESC, name
-        LIMIT ?
-        """,
-        tuple(seen) + (limit - len(recommendations),) if seen else (limit - len(recommendations),),
-    ).fetchall()
+    if seen:
+        remaining_rows = conn.execute(
+            "SELECT name, role, description FROM notes WHERE NOT (name = ANY(%s)) ORDER BY is_fallback DESC, name LIMIT %s",
+            (list(seen), limit - len(recommendations)),
+        ).fetchall()
+    else:
+        remaining_rows = conn.execute(
+            "SELECT name, role, description FROM notes ORDER BY is_fallback DESC, name LIMIT %s",
+            (limit - len(recommendations),),
+        ).fetchall()
     for row in remaining_rows:
         recommendations.append(
             ScentRecommendation(

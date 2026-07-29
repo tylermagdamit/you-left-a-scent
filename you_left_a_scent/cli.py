@@ -3,21 +3,20 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 from typing import Sequence
 
-from .db import connect, default_db_path, initialize
+from .db import connect, initialize
 from .matching import recommend, visual_direction
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="you left a scent",
-        description="Turn a short vibe sentence into 3 to 5 scent notes using a local SQLite database.",
+        description="Turn a short vibe sentence into 3 to 5 scent notes using PostgreSQL.",
     )
     parser.add_argument("vibe", nargs="*", help='A short phrase like "robotic sunrise" or "romantic night out".')
     parser.add_argument("-n", "--count", type=int, default=5, help="How many notes to return, between 3 and 5.")
-    parser.add_argument("--db", type=Path, default=default_db_path(), help="Path to the SQLite database file.")
+    parser.add_argument("--database-url", help="PostgreSQL connection URL; defaults to DATABASE_URL.")
     return parser
 
 
@@ -29,7 +28,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not vibe_text:
         vibe_text = input("Describe the vibe in a short sentence: ").strip()
 
-    with connect(args.db) as conn:
+    with connect(args.database_url) as conn:
         initialize(conn)
         try:
             notes, matched_tags = recommend(conn, vibe_text, limit=args.count)

@@ -4,7 +4,7 @@
 
 `You Left a Scent` is a deterministic, local fragrance-vibe engine. It turns a
 phrase or short sentence into three to five scent notes, matched tags, and a
-GUI-ready visual direction. It uses a curated Python catalog and SQLite; it
+GUI-ready visual direction. It uses a curated Python catalog and PostgreSQL; it
 does not use AI or external services.
 
 ## Current Architecture
@@ -19,7 +19,7 @@ you_left_a_scent/
     syntax.py                   # Filler words for sentence parsing
     aliases/                    # Input phrase -> tag mappings
   db/
-    seed.py                     # SQLite seed version and catalog seeding
+    seed.py                     # PostgreSQL seed version and catalog seeding
     schema.py
     connection.py
   matching/
@@ -28,7 +28,7 @@ you_left_a_scent/
     fuzzy.py                    # RapidFuzz fallback safeguards
     history.py                  # Repeat penalties
     models.py                   # ScentRecommendation
-    repository.py               # SQLite lookups
+    repository.py               # PostgreSQL lookups
     visuals.py                  # GUI palette and note-layer resolver
 ```
 
@@ -130,7 +130,7 @@ When changing `notes.py`, aliases, or categories:
 
 1. Increment `SEED_VERSION` in `you_left_a_scent/db/seed.py`.
 2. Run a test prompt. Initialization detects the new version and refreshes the
-   local SQLite database automatically.
+   PostgreSQL database automatically.
 
 ```powershell
 python main.py "night market"
@@ -152,4 +152,4 @@ python main.py "dark academia library"
 - Duplicate keys in an alias dictionary silently overwrite earlier entries.
 - Alias tags that no note carries will not help recommendation ranking.
 - Broad tags on too many notes make results less distinctive.
-- Catalog changes require a `SEED_VERSION` bump before they appear in SQLite.
+- Catalog changes require a `SEED_VERSION` bump before they appear in PostgreSQL.

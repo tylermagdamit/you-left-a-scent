@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
-import sqlite3
+from typing import Any
 
 from .normalization import normalize_terms
 
@@ -12,12 +12,12 @@ def build_input_key(vibe_text: str) -> str:
     return " ".join(normalize_terms(vibe_text))
 
 
-def load_repeat_penalties(conn: sqlite3.Connection, input_key: str) -> dict[str, int]:
+def load_repeat_penalties(conn: Any, input_key: str) -> dict[str, int]:
     rows = conn.execute(
         """
         SELECT note_name, COUNT(*) AS count
         FROM recommendation_history
-        WHERE input_key = ?
+        WHERE input_key = %s
         GROUP BY note_name
         """,
         (input_key,),
@@ -26,14 +26,14 @@ def load_repeat_penalties(conn: sqlite3.Connection, input_key: str) -> dict[str,
     return {name: count * 10 for name, count in counts.items()}
 
 
-def load_recent_note_names(conn: sqlite3.Connection, input_key: str, limit: int = 5) -> list[str]:
+def load_recent_note_names(conn: Any, input_key: str, limit: int = 5) -> list[str]:
     rows = conn.execute(
         """
         SELECT note_name
         FROM recommendation_history
-        WHERE input_key = ?
+        WHERE input_key = %s
         ORDER BY id DESC
-        LIMIT ?
+        LIMIT %s
         """,
         (input_key, limit),
     ).fetchall()
@@ -49,12 +49,12 @@ def load_recent_note_names(conn: sqlite3.Connection, input_key: str, limit: int 
     return ordered
 
 
-def record_recommendations(conn: sqlite3.Connection, input_key: str, note_names: list[str]) -> None:
+def record_recommendations(conn: Any, input_key: str, note_names: list[str]) -> None:
     for note_name in note_names:
         conn.execute(
             """
             INSERT INTO recommendation_history (input_key, note_name)
-            VALUES (?, ?)
+            VALUES (%s, %s)
             """,
             (input_key, note_name),
         )
