@@ -149,6 +149,23 @@ Open `http://127.0.0.1:8000`. `GET /api/health` is a no-database health check.
 The default recommendation count is five and can be supplied as `count` (3-5)
 in the API JSON body when another interface needs it.
 
+## Deployment
+
+The repository is deployed from GitHub to Vercel. `pyproject.toml` declares the
+FastAPI entry point as `you_left_a_scent.web:app`, and `.python-version` selects
+Python 3.13. Vercel automatically creates a new Production deployment for each
+push to `main`; pushes to other branches create Preview deployments.
+
+Neon provides the hosted PostgreSQL database through the Vercel integration.
+The integration supplies `DATABASE_URL` to Production, Preview, and Development
+environments. Vercel should use Neon's pooled URL. The direct/unpooled URL is
+only for local administration such as the initial seed. The Neon catalog has
+already been seeded successfully.
+
+No manual redeploy is necessary after a normal Git push. Manually redeploy only
+after changing a Vercel environment variable, changing the Neon integration,
+or when retrying a failed deployment.
+
 ## Database Refresh and Verification
 
 When changing `notes.py`, aliases, or categories:

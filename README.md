@@ -1,6 +1,7 @@
 # You Left a Scent
 
-`You Left a Scent` is a small local fragrance-vibe generator.
+`You Left a Scent` is a small fragrance-vibe generator with a local CLI and a
+deployed web app.
 You type in a short sentence like `kiss`, `moonlight`, `brutalist concrete`, or `job interview`, and it returns scent notes that fit the mood.
 
 It does not use AI.
@@ -197,6 +198,24 @@ you_left_a_scent/
 
 `pyproject.toml` explicitly tells Vercel to use `you_left_a_scent.web:app`
 instead of the command-line `main.py` entry point.
+
+## Deployment: Vercel + Neon
+
+The production website runs on Vercel and uses a Neon PostgreSQL database.
+Vercel deploys the `main` branch automatically after every GitHub push; no
+manual redeploy is needed for normal code or catalog changes. A push to another
+branch creates a Preview deployment instead.
+
+The Vercel Neon integration provides `DATABASE_URL` for Production, Preview,
+and Development. Keep the pooled connection string for Vercel. Use the direct
+(unpooled) connection only for one-time local administration, such as seeding
+or inspecting the database. Do not commit or share either connection string.
+
+The Neon production database has already been seeded. If you change notes,
+aliases, or categories later, increment `SEED_VERSION`; the next request will
+refresh the catalog automatically. Environment-variable changes are the
+exception: after changing one in Vercel, manually redeploy so the new value is
+included in a fresh deployment.
 
 ## Visual Directions for a GUI
 
